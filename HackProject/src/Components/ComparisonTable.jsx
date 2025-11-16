@@ -69,13 +69,14 @@ export default function ComparisonTable({
     [majors, selectedMajors, selectedYear]
   );
 
-  const toggleTaken = (course) => {
-    if (takenCourses.includes(course)) {
-      setTakenCourses(takenCourses.filter((c) => c !== course));
+    const toggleTaken = (course) => {
+    const mainCourse = course.split(' / ')[0];
+    if (takenCourses.includes(mainCourse)) {
+        setTakenCourses(takenCourses.filter((c) => c !== mainCourse));
     } else {
-      setTakenCourses([...takenCourses, course]);
+        setTakenCourses([...takenCourses, mainCourse]);
     }
-  };
+    };
 
   const minAvg =
     selectedMajors.length === 0
@@ -137,7 +138,7 @@ export default function ComparisonTable({
                 <td>
                   <input
                     type="checkbox"
-                    checked={takenCourses.includes(r.course)}
+                    checked={takenCourses.some(taken => r.course.includes(taken))}
                     onChange={() => toggleTaken(r.course)}
                   />
                 </td>

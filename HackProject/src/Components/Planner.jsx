@@ -119,22 +119,17 @@ export default function Planner({
                     <li key={c.courseDisplay}>
                       <label>
                         <input
-                          type="checkbox"
-                          checked={takenCourses.includes(c.courseDisplay)}
-                          onChange={() => {
-                            if (takenCourses.includes(c.courseDisplay))
-                              setTakenCourses(
-                                takenCourses.filter(
-                                  (x) => x !== c.courseDisplay
-                                )
-                              );
-                            else
-                              setTakenCourses([
-                                ...takenCourses,
-                                c.courseDisplay,
-                              ]);
-                          }}
-                        />
+                            type="checkbox"
+                            checked={takenCourses.some(taken => c.courseDisplay.includes(taken))}
+                            onChange={() => {
+                                const mainCourse = c.courseDisplay.split(' / ')[0];
+                                if (takenCourses.includes(mainCourse)) {
+                                setTakenCourses(takenCourses.filter(x => x !== mainCourse))
+                                } else {
+                                setTakenCourses([...takenCourses, mainCourse])
+                                }
+                            }}
+                            />
                         <strong>{c.courseDisplay}</strong>{" "}
                         <em>
                           ({c.credits ?? "?"} cr) — {c.major}
@@ -167,16 +162,16 @@ export default function Planner({
                     <label>
                       <input
                         type="checkbox"
-                        checked={takenCourses.includes(c.courseDisplay)}
+                        checked={takenCourses.some(taken => c.courseDisplay.includes(taken))}
                         onChange={() => {
-                          if (takenCourses.includes(c.courseDisplay))
-                            setTakenCourses(
-                              takenCourses.filter((x) => x !== c.courseDisplay)
-                            );
-                          else
-                            setTakenCourses([...takenCourses, c.courseDisplay]);
+                            const mainCourse = c.courseDisplay.split(' / ')[0];
+                            if (takenCourses.includes(mainCourse)) {
+                            setTakenCourses(takenCourses.filter(x => x !== mainCourse))
+                            } else {
+                            setTakenCourses([...takenCourses, mainCourse])
+                            }
                         }}
-                      />
+                        />
                       <strong>{c.courseDisplay}</strong>{" "}
                       <em>
                         ({c.credits ?? "?"} cr) — {c.major}
