@@ -1,39 +1,88 @@
+// --- Global arrays to track user data ---
+let takenCourses = [];
+let selectedMajors = [];
+
+// --- Grab form elements ---
+const gpaInput = document.getElementById('gpa');
+const majorInput = document.getElementById('major');
+const yearInput = document.getElementById('year');
 const coursesContainer = document.getElementById('coursesContainer');
 const addCourseBtn = document.getElementById('addCourse');
 const submitBtn = document.getElementById('submitRecord');
+const recordOutput = document.getElementById('recordOutput');
 
-// Start with one course input visible
-addNewCourseInput();
+// --- Function to create a new course input ---
+function createCourseInput(value = "") {
+  const div = document.createElement("div");
+  div.className = "course-field";
 
-// Add a new input field for a course
-addCourseBtn.addEventListener('click', addNewCourseInput);
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Course code (e.g., CPSC 110)";
+  input.value = value;
+  input.className = "course-input";
 
-function addNewCourseInput() {
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.placeholder = 'Course code, e.g. CPSC 110';
-  coursesContainer.appendChild(input);
-  coursesContainer.appendChild(document.createElement('br'));
+  const removeBtn = document.createElement("button");
+  removeBtn.type = "button";
+  removeBtn.textContent = "Remove";
+  removeBtn.addEventListener("click", () => div.remove());
+
+  div.appendChild(input);
+  div.appendChild(removeBtn);
+  coursesContainer.appendChild(div);
 }
 
-// Collect all inputs when submit is clicked
-submitBtn.addEventListener('click', () => {
-  const gpa = parseFloat(document.getElementById('gpa').value);
-  const major = document.getElementById('major').value.trim();
-  const year = document.getElementById('year').value;
+// --- Add initial course input ---
+createCourseInput();
 
-  const courseInputs = coursesContainer.querySelectorAll('input');
-  const courses = Array.from(courseInputs)
-                       .map(input => input.value.trim())
-                       .filter(c => c.length > 0);
+// --- Add course on button click ---
+addCourseBtn.addEventListener("click", () => createCourseInput());
 
-  // Display collected data
-  document.getElementById('recordOutput').innerHTML = `
-    <p><strong>GPA:</strong> ${gpa}</p>
-    <p><strong>Major:</strong> ${major}</p>
-    <p><strong>Year:</strong> ${year}</p>
-    <p><strong>Completed Courses:</strong> ${courses.join(', ')}</p>
-  `;
+// --- Handle form submission ---
+submitBtn.addEventListener("click", () => {
+  // Grab course values
+  const courses = Array.from(coursesContainer.querySelectorAll(".course-input"))
+                       .map(input => input.value)
+                       .filter(c => c);
 
-  console.log({ gpa, major, year, courses }); // For testing
+  const userRecord = {
+    gpa: gpaInput.value,
+    major: majorInput.value,
+    year: yearInput.value,
+    courses
+  };
+
+  console.log("User Record:", userRecord);
+
+  // Update global arrays
+  courses.forEach(c => {
+    if (!takenCourses.includes(c)) takenCourses.push(c);
+  });
+
+  if (userRecord.major && !selectedMajors.includes(userRecord.major)) {
+    selectedMajors.push(userRecord.major);
+  }
+
+  // Update the Planner display
+  redrawPlanner();
 });
+
+// --- Function to update Planner display ---
+function redrawPlanner() {
+  recordOutput.innerHTML = ""; // clear previous
+
+  selectedMajors.forEach(major => {
+    const div = document.createElement("div");
+    div.innerHTML = `<h3>${major}</h3>`;
+
+    const ul = document.createElement("ul");
+    takenCourses.forEach(course => {
+      const li = document.createElement("li");
+      li.textContent = course;
+      ul.appendChild(li);
+    });
+
+    div.appendChild(ul);
+    recordOutput.appendChild(div);
+  });
+}
