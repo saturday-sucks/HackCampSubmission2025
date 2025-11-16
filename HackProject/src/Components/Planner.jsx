@@ -141,7 +141,6 @@ export default function Planner({
                             value={majorFilter}
                             onChange={(e) => setMajorFilter(e.target.value)}
                         >
-                            <option value="All">All Majors</option>
                             {selectedObjs.map((m) => (
                                 <option key={m.major} value={m.major}>
                                     {m.major}
@@ -159,11 +158,8 @@ export default function Planner({
                                 <p>No required courses for this year.</p>
                             ) : (
                                 <ul>
-                                    {yr.courses
-                                        .filter(
-                                            (c) => majorFilter === "All" || c.majors.includes(majorFilter)
-                                        )
-                                        .map((c) => (
+                                    {yr.courses.filter(
+                                            (c) => majorFilter === "All" || c.majors.includes(majorFilter)).map((c) => (
                                             <li key={c.courseDisplay}>
                                                 <label>
                                                     <input
