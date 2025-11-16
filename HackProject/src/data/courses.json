@@ -1,42 +1,304 @@
 [
     {
-    "major": "Computer Science",
-    "min_average": 85,
-    "years": [
-    {
-    "year": "First Year",
-    "required_courses": [
-    { "course": "CPSC 110", "credits": 4 },
-    { "course": "CPSC 121", "credits": 3 },
-    { "course": "MATH 100", "credits": 3 }
-    ]
+      "major": "Computer Science",
+      "years": [
+        {
+          "year": "First Year",
+          "required_courses": [
+            { "credits": 3, "options": [["SCIE 113"]] },
+            {
+              "credits": 3,
+              "options": [["Additional Communication Requirement"]]
+            },
+            { "credits": 4, "options": [["CPSC 110"], ["CPSC 103", "CPSC 107"]] },
+            { "credits": 4, "options": [["CPSC 121"]] },
+            {
+              "credits": 3,
+              "options": [
+                ["MATH 100"],
+                ["MATH 102"],
+                ["MATH 104"],
+                ["MATH 180"],
+                ["MATH 184"],
+                ["MATH 120"],
+                ["MATH 110"]
+              ]
+            },
+            {
+              "credits": 3,
+              "options": [["MATH 101"], ["MATH 103"], ["MATH 105"], ["MATH 121"]]
+            },
+            { "credits": 10, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Second Year",
+          "required_courses": [
+            { "credits": 4, "options": [["CPSC 210"]] },
+            { "credits": 8, "options": [["CPSC 213", "CPSC 221"]] },
+            { "credits": 6, "options": [["MATH 200", "MATH 221"]] },
+            { "credits": 3, "options": [["STAT 241"], ["STAT 251"]] },
+            { "credits": 9, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Upper Year Courses",
+          "required_courses": [
+            { "credits": 10, "options": [["CPSC 310", "CPSC 313", "CPSC 320"]] },
+            {
+              "credits": 9,
+              "options": [["CPSC courses numbered 300 or higher"]]
+            },
+            {
+              "credits": 9,
+              "options": [["CPSC courses numbered 400 or higher"]]
+            },
+            { "credits": 32, "options": [["Electives"]] }
+          ]
+        }
+      ],
+      "total_credits_for_degree": 120
     },
     {
-    "year": "Second Year",
-    "required_courses": [
-    { "course": "CPSC 210", "credits": 3 },
-    { "course": "MATH 200", "credits": 3 }
-    ]
-    }
-    ]
+      "major": "Data Science",
+      "years": [
+        {
+          "year": "First Year",
+          "required_courses": [
+            { "credits": 3, "options": [["CPSC 103"]] },
+            { "credits": 3, "options": [["DSCI 100"]] },
+            {
+              "credits": 3,
+              "options": [["MATH 100"], ["MATH 180"], ["MATH 120"], ["MATH 110"]]
+            },
+            { "credits": 3, "options": [["MATH 101"], ["MATH 121"]] },
+            { "credits": 3, "options": [["SCIE 113"]] },
+            {
+              "credits": 3,
+              "options": [["Additional Communications Requirement"]]
+            },
+            { "credits": 12, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Second Year",
+          "required_courses": [
+            { "credits": 11, "options": [["DSCI 200", "DSCI 220", "DSCI 221"]] },
+            { "credits": 6, "options": [["MATH 200", "MATH 221"]] },
+            { "credits": 3, "options": [["STAT 201"]] },
+            { "credits": 10, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Upper Year Courses",
+          "required_courses": [
+            { "credits": 3, "options": [["CPSC 330"], ["CPSC 340"]] },
+            { "credits": 3, "options": [["CPSC 368"]] },
+            { "credits": 9, "options": [["DSCI 310", "DSCI 320", "DSCI 430"]] },
+            {
+              "credits": 12,
+              "options": [["STAT 301", "STAT 302", "STAT 305", "STAT 443"]]
+            },
+            {
+              "credits": 12,
+              "options": [["Any Upper level MATH, STAT, CPSC, or DSCI"]]
+            },
+            { "credits": 6, "options": [["Data Science Depth Requirement"]] },
+            { "credits": 15, "options": [["Electives"]] }
+          ]
+        }
+      ],
+      "total_credits_for_degree": 120
     },
     {
-    "major": "Physics",
-    "min_average": 75,
-    "years": [
-    {
-    "year": "First Year",
-    "required_courses": [
-    { "course": "PHYS 101", "credits": 4 },
-    { "course": "MATH 100", "credits": 3 }
-    ]
+      "major": "Biotechnology",
+      "years": [
+        {
+          "year": "First Year",
+          "required_courses": [
+            {
+              "credits": 6,
+              "options": [
+                ["BIOL 111", "BIOL 112"],
+                ["BIOL 111", "BIOL 121"],
+                ["BIOL 112", "BIOL 121"]
+              ]
+            },
+            { "credits": 4, "options": [["CHEM 121"], ["CHEM 111", "CHEM 141"]] },
+            { "credits": 4, "options": [["CHEM 123"]] },
+            { "credits": 3, "options": [["SCIE 113"]] },
+            {
+              "credits": 3,
+              "options": [["Additional Communication Requirement"]]
+            },
+            {
+              "credits": 3,
+              "options": [["MATH 102"], ["MATH 100"], ["MATH 104"]]
+            },
+            { "credits": 3, "options": [["PHYS 100-level"]] },
+            { "credits": 4, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Second Year",
+          "required_courses": [
+            { "credits": 15, "options": [["BIOT 280"]] },
+            { "credits": 15, "options": [["BIOT 380"]] },
+            { "credits": 15, "options": [["BIOT 398"]] },
+            { "credits": 15, "options": [["BIOT 399"]] }
+          ],
+          "total_credits": 60
+        },
+        {
+          "year": "Upper Year Courses",
+          "required_courses": [
+            {
+              "credits": 15,
+              "options": [
+                ["BIOC 402"],
+                ["BIOC 403"],
+                ["BIOC 410"],
+                ["BIOC 440"],
+                ["BIOC 450"],
+                ["BIOC 460"],
+                ["BIOL 421"],
+                ["BIOL 436"],
+                ["BIOL 440"],
+                ["BIOL 458"],
+                ["BIOL 462"],
+                ["BIOL 463"],
+                ["MEDG 420"],
+                ["MEDG 421"],
+                ["MICB 301"],
+                ["MICB 306"],
+                ["MICB 308"],
+                ["MICB 402"],
+                ["MICB 407"],
+                ["MICB 408"],
+                ["MICB 418"],
+                ["MICB 425"]
+              ]
+            },
+            {
+              "credits": 3,
+              "options": [
+                ["MICB 404"],
+                ["MICB 406"],
+                ["MICB 412"],
+                ["MICB 413"],
+                ["MICB 430"]
+              ]
+            },
+            { "credits": 3, "options": [["MICB 405"]] },
+            { "credits": 3, "options": [["CHBE 419"]] },
+            {
+              "credits": 3,
+              "options": [
+                ["MICB 305"],
+                ["MICB 421"],
+                ["MICB 447"],
+                ["MICB 448"],
+                ["MICB 471"],
+                ["MICB 475"]
+              ]
+            },
+            {
+              "credits": 6,
+              "options": [
+                ["COMR 383", "COMR 388"],
+                ["COMR 383", "COMR 457"],
+                ["COMR 383", "COMR 465"],
+                ["COMR 388", "COMR 457"],
+                ["COMR 388", "COMR 465"],
+                ["COMR 457", "COMR 465"]
+              ]
+            },
+            {
+              "credits": 6,
+              "options": [["MICB 398"], ["MICB 399"], ["MICB 498"], ["MICB 499"]]
+            },
+            { "credits": 9, "options": [["Electives"]] }
+          ]
+        }
+      ],
+      "total_credits_for_degree": 132
     },
     {
-    "year": "Second Year",
-    "required_courses": [
-    { "course": "PHYS 201", "credits": 3 }
-    ]
+      "major": "Physics",
+      "years": [
+        {
+          "year": "First Year",
+          "required_courses": [
+            { "credits": 3, "options": [["SCIE 113"]] },
+            {
+              "credits": 3,
+              "options": [["Additional Communication Requirement"]]
+            },
+            { "credits": 4, "options": [["CHEM 121"], ["CHEM 111"]] },
+            {
+              "credits": 3,
+              "options": [
+                ["MATH 100"],
+                ["MATH 102"],
+                ["MATH 104"],
+                ["MATH 110"],
+                ["MATH 120"],
+                ["MATH 180"],
+                ["MATH 184"]
+              ]
+            },
+            {
+              "credits": 3,
+              "options": [["MATH 101"], ["MATH 103"], ["MATH 105"], ["MATH 121"]]
+            },
+            {
+              "credits": 3,
+              "options": [["PHYS 117"], ["PHYS 106"], ["PHYS 107"]]
+            },
+            { "credits": 3, "options": [["PHYS 118"], ["PHYS 108"]] },
+            { "credits": 1, "options": [["PHYS 119"], ["PHYS 109"]] },
+            { "credits": 7, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Second Year",
+          "required_courses": [
+            { "credits": 3, "options": [["MATH 200"]] },
+            { "credits": 6, "options": [["MATH 215", "MATH 221"]] },
+            { "credits": 7, "options": [["PHYS 200", "PHYS 216"]] },
+            { "credits": 3, "options": [["PHYS 219", "PHYS 229"]] },
+            { "credits": 3, "options": [["PHYS 210"]] },
+            { "credits": 8, "options": [["Electives"]] }
+          ],
+          "total_credits": 30
+        },
+        {
+          "year": "Upper Year Courses",
+          "required_courses": [
+            { "credits": 3, "options": [["MATH 317"]] },
+            { "credits": 4, "options": [["PHYS 203"]] },
+            { "credits": 3, "options": [["PHYS 309"], ["PHYS 319"]] },
+            { "credits": 3, "options": [["PHYS 312"], ["MATH 316"]] },
+            { "credits": 3, "options": [["PHYS 304"]] },
+            { "credits": 3, "options": [["PHYS/ASTR 300-level and above"]] },
+            { "credits": 11, "options": [["Electives"]] },
+            { "credits": 3, "options": [["PHYS 301"]] },
+            {
+              "credits": 3,
+              "options": [["PHYS 348"], ["PHYS 409"], ["PHYS 420"]]
+            },
+            { "credits": 9, "options": [["PHYS/ASTR 300-level and above"]] },
+            { "credits": 15, "options": [["Electives"]] }
+          ]
+        }
+      ],
+      "total_credits_for_degree": 120
     }
-    ]
-    }
-    ]
+  ]
+  

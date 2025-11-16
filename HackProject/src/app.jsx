@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import MajorSelector from './components/MajorSelector'
-import ComparisonTable from './components/ComparisonTable'
-import Planner from './components/Planner'
+import MajorSelector from './Components/MajorSelector'
+import ComparisonTable from './Components/ComparisonTable'
+import Planner from './Components/Planner'
 
 
 export default function App() {
