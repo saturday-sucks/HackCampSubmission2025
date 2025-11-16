@@ -81,7 +81,7 @@ function ExpandableText({ text, completed }) {
 }
 
 // ---------------------------
-// NEW PLANNER WITH CREDITS
+// PLANNER COMPONENT
 // ---------------------------
 export default function Planner({
   majors,
@@ -90,7 +90,6 @@ export default function Planner({
   setTakenCourses,
 }) {
   const [majorFilter, setMajorFilter] = React.useState("All");
-
   const selectedObjs = majors.filter((m) => selectedMajors.includes(m.major));
   const lowerYears = ["First Year", "Second Year"];
 
@@ -99,14 +98,13 @@ export default function Planner({
   // ----------------------------
   const isCourseCompleted = (course) => {
     if (!course.options) return false;
-    // A course is complete if any option is fully completed
     return course.options.some((option) =>
       option.every((c) => takenCourses.includes(c))
     );
   };
 
   // ----------------------------
-  // BUILD COURSES (same logic)
+  // BUILD COURSES
   // ----------------------------
   const buildCourses = (yearFilter) => {
     const raw = [];
@@ -147,7 +145,6 @@ export default function Planner({
 
     // merge duplicates
     const map = new Map();
-
     raw.forEach((c) => {
       if (!map.has(c.courseDisplay)) {
         map.set(c.courseDisplay, c);
@@ -166,22 +163,30 @@ export default function Planner({
     year: yr,
     courses: buildCourses((y) => y === yr),
   }));
-
   const upperYearCourses = buildCourses((y) => !lowerYears.includes(y));
 
   // ----------------------------
-  // TOGGLE
+  // TOGGLE COURSES
   // ----------------------------
-  const toggleCourse = (courseName) => {
-    if (takenCourses.includes(courseName)) {
-      setTakenCourses(takenCourses.filter((x) => x !== courseName));
+  const toggleCourse = (course) => {
+    // toggle the first option by default
+    const optionToToggle = course.options[0];
+    const allTaken = optionToToggle.every((c) => takenCourses.includes(c));
+
+    if (allTaken) {
+      setTakenCourses(
+        takenCourses.filter((c) => !optionToToggle.includes(c))
+      );
     } else {
-      setTakenCourses([...takenCourses, courseName]);
+      setTakenCourses([
+        ...takenCourses,
+        ...optionToToggle.filter((c) => !takenCourses.includes(c)),
+      ]);
     }
   };
 
   // ----------------------------
-  // CREDIT CALCULATIONS
+  // CALCULATE CREDITS
   // ----------------------------
   const calcCredits = (courses) => {
     const total = courses.reduce((sum, c) => sum + (c.credits ?? 0), 0);
@@ -223,7 +228,6 @@ export default function Planner({
             const filtered = yr.courses.filter(
               (c) => majorFilter === "All" || c.majors.includes(majorFilter)
             );
-
             const creditStats = calcCredits(filtered);
 
             return (
@@ -234,9 +238,7 @@ export default function Planner({
                     Total: <strong>{creditStats.total}</strong> credits |{" "}
                     Completed: <strong>{creditStats.completed}</strong> |{" "}
                     Remaining:{" "}
-                    <strong style={{ color: "red" }}>
-                      {creditStats.remaining}
-                    </strong>
+                    <strong style={{ color: "red" }}>{creditStats.remaining}</strong>
                   </span>
                 </h3>
 
@@ -258,12 +260,8 @@ export default function Planner({
                           >
                             <input
                               type="checkbox"
-                              checked={c.options.some((opt) =>
-                                opt.every((o) => takenCourses.includes(o))
-                              )}
-                              onChange={() =>
-                                toggleCourse(c.courseDisplay)
-                              }
+                              checked={done}
+                              onChange={() => toggleCourse(c)}
                             />
 
                             <div style={{ flex: 1 }}>
@@ -303,9 +301,7 @@ export default function Planner({
                       Total: <strong>{creditStats.total}</strong> credits |{" "}
                       Completed: <strong>{creditStats.completed}</strong> |{" "}
                       Remaining:{" "}
-                      <strong style={{ color: "red" }}>
-                        {creditStats.remaining}
-                      </strong>
+                      <strong style={{ color: "red" }}>{creditStats.remaining}</strong>
                     </span>
                   </h3>
 
@@ -324,12 +320,8 @@ export default function Planner({
                           >
                             <input
                               type="checkbox"
-                              checked={c.options.some((opt) =>
-                                opt.every((o) => takenCourses.includes(o))
-                              )}
-                              onChange={() =>
-                                toggleCourse(c.courseDisplay)
-                              }
+                              checked={done}
+                              onChange={() => toggleCourse(c)}
                             />
 
                             <div style={{ flex: 1 }}>

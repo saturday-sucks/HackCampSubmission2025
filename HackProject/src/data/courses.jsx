@@ -37,8 +37,8 @@ export const courses = [
           "year": "Second Year",
           "required_courses": [
             { "credits": 4, "options": [["CPSC 210"]] },
-            { "credits": 8, "options": [["CPSC 213", "CPSC 221"]] },
-            { "credits": 6, "options": [["MATH 200", "MATH 221"]] },
+            { "credits": 4, "options": [["CPSC 213", "CPSC 221"]] },
+            { "credits": 3, "options": [["MATH 200", "MATH 221"]] },
             { "credits": 3, "options": [["STAT 241"], ["STAT 251"]] },
             { "credits": 9, "options": [["Electives"]] }
           ],
@@ -47,7 +47,7 @@ export const courses = [
         {
           "year": "Upper Year Courses",
           "required_courses": [
-            { "credits": 10, "options": [["CPSC 310", "CPSC 313", "CPSC 320"]] },
+            { "credits": 3, "options": [["CPSC 310", "CPSC 313", "CPSC 320"]] },
             {
               "credits": 9,
               "options": [["CPSC courses numbered 300 or higher"]]
@@ -73,13 +73,19 @@ export const courses = [
             { "credits": 3, "options": [["DSCI 100"]] },
             {
               "credits": 3,
-              "options": [["MATH 100"], ["MATH 180"], ["MATH 120"], ["MATH 110"]]
+              "options": [["MATH 100"],
+              ["MATH 102"],
+              ["MATH 104"],
+              ["MATH 180"],
+              ["MATH 184"],
+              ["MATH 120"],
+              ["MATH 110"]]
             },
-            { "credits": 3, "options": [["MATH 101"], ["MATH 121"]] },
+            { "credits": 3, "options": [["MATH 101"], ["MATH 103"], ["MATH 105"], ["MATH 121"]] },
             { "credits": 3, "options": [["SCIE 113"]] },
             {
               "credits": 3,
-              "options": [["Additional Communications Requirement"]]
+              "options": [["Additional Communication Requirement"]]
             },
             { "credits": 12, "options": [["Electives"]] }
           ],
@@ -88,8 +94,8 @@ export const courses = [
         {
           "year": "Second Year",
           "required_courses": [
-            { "credits": 11, "options": [["DSCI 200", "DSCI 220", "DSCI 221"]] },
-            { "credits": 6, "options": [["MATH 200", "MATH 221"]] },
+            { "credits": 3, "options": [["DSCI 200", "DSCI 220", "DSCI 221"]] },
+            { "credits": 3, "options": [["MATH 200", "MATH 221"]] },
             { "credits": 3, "options": [["STAT 201"]] },
             { "credits": 10, "options": [["Electives"]] }
           ],
@@ -100,9 +106,9 @@ export const courses = [
           "required_courses": [
             { "credits": 3, "options": [["CPSC 330"], ["CPSC 340"]] },
             { "credits": 3, "options": [["CPSC 368"]] },
-            { "credits": 9, "options": [["DSCI 310", "DSCI 320", "DSCI 430"]] },
+            { "credits": 3, "options": [["DSCI 310", "DSCI 320", "DSCI 430"]] },
             {
-              "credits": 12,
+              "credits": 3,
               "options": [["STAT 301", "STAT 302", "STAT 305", "STAT 443"]]
             },
             {
@@ -115,121 +121,6 @@ export const courses = [
         }
       ],
       "total_credits_for_degree": 120
-    },
-    {
-      "major": "Biotechnology",
-      "min_average": "NA",
-      "years": [
-        {
-          "year": "First Year",
-          "required_courses": [
-            {
-              "credits": 6,
-              "options": [
-                ["BIOL 111", "BIOL 112"],
-                ["BIOL 111", "BIOL 121"],
-                ["BIOL 112", "BIOL 121"]
-              ]
-            },
-            { "credits": 4, "options": [["CHEM 121"], ["CHEM 111", "CHEM 141"]] },
-            { "credits": 4, "options": [["CHEM 123"]] },
-            { "credits": 3, "options": [["SCIE 113"]] },
-            {
-              "credits": 3,
-              "options": [["Additional Communication Requirement"]]
-            },
-            {
-              "credits": 3,
-              "options": [["MATH 102"], ["MATH 100"], ["MATH 104"]]
-            },
-            { "credits": 3, "options": [["PHYS 100-level"]] },
-            { "credits": 4, "options": [["Electives"]] }
-          ],
-          "total_credits": 30
-        },
-        {
-          "year": "Second Year",
-          "required_courses": [
-            { "credits": 15, "options": [["BIOT 280"]] },
-            { "credits": 15, "options": [["BIOT 380"]] },
-            { "credits": 15, "options": [["BIOT 398"]] },
-            { "credits": 15, "options": [["BIOT 399"]] }
-          ],
-          "total_credits": 60
-        },
-        {
-          "year": "Upper Year Courses",
-          "required_courses": [
-            {
-              "credits": 15,
-              "options": [
-                ["BIOC 402"],
-                ["BIOC 403"],
-                ["BIOC 410"],
-                ["BIOC 440"],
-                ["BIOC 450"],
-                ["BIOC 460"],
-                ["BIOL 421"],
-                ["BIOL 436"],
-                ["BIOL 440"],
-                ["BIOL 458"],
-                ["BIOL 462"],
-                ["BIOL 463"],
-                ["MEDG 420"],
-                ["MEDG 421"],
-                ["MICB 301"],
-                ["MICB 306"],
-                ["MICB 308"],
-                ["MICB 402"],
-                ["MICB 407"],
-                ["MICB 408"],
-                ["MICB 418"],
-                ["MICB 425"]
-              ]
-            },
-            {
-              "credits": 3,
-              "options": [
-                ["MICB 404"],
-                ["MICB 406"],
-                ["MICB 412"],
-                ["MICB 413"],
-                ["MICB 430"]
-              ]
-            },
-            { "credits": 3, "options": [["MICB 405"]] },
-            { "credits": 3, "options": [["CHBE 419"]] },
-            {
-              "credits": 3,
-              "options": [
-                ["MICB 305"],
-                ["MICB 421"],
-                ["MICB 447"],
-                ["MICB 448"],
-                ["MICB 471"],
-                ["MICB 475"]
-              ]
-            },
-            {
-              "credits": 6,
-              "options": [
-                ["COMR 383", "COMR 388"],
-                ["COMR 383", "COMR 457"],
-                ["COMR 383", "COMR 465"],
-                ["COMR 388", "COMR 457"],
-                ["COMR 388", "COMR 465"],
-                ["COMR 457", "COMR 465"]
-              ]
-            },
-            {
-              "credits": 6,
-              "options": [["MICB 398"], ["MICB 399"], ["MICB 498"], ["MICB 499"]]
-            },
-            { "credits": 9, "options": [["Electives"]] }
-          ]
-        }
-      ],
-      "total_credits_for_degree": 132
     },
     {
       "major": "Physics",
@@ -274,8 +165,8 @@ export const courses = [
           "year": "Second Year",
           "required_courses": [
             { "credits": 3, "options": [["MATH 200"]] },
-            { "credits": 6, "options": [["MATH 215", "MATH 221"]] },
-            { "credits": 7, "options": [["PHYS 200", "PHYS 216"]] },
+            { "credits": 3, "options": [["MATH 215", "MATH 221"]] },
+            { "credits": 3, "options": [["PHYS 200", "PHYS 216"]] },
             { "credits": 3, "options": [["PHYS 219", "PHYS 229"]] },
             { "credits": 3, "options": [["PHYS 210"]] },
             { "credits": 8, "options": [["Electives"]] }
@@ -345,13 +236,13 @@ export const courses = [
         {
           "year": "Second Year",
           "required_courses": [
-            { "credits": 6, "options": [["ASTR 200", "ASTR 205"]] },
-            { "credits": 6, "options": [["MATH 200", "MATH 317"]] },
+            { "credits": 3, "options": [["ASTR 200", "ASTR 205"]] },
+            { "credits": 3, "options": [["MATH 200", "MATH 317"]] },
             {
-              "credits": 6,
+              "credits": 2,
               "options": [["MATH 221"], ["MATH 223"], ["MATH 215"]]
             },
-            { "credits": 7, "options": [["PHYS 200", "PHYS 219", "PHYS 229"]] },
+            { "credits": 2, "options": [["PHYS 200", "PHYS 219", "PHYS 229"]] },
             { "credits": 3, "options": [["PHYS 210"]] },
             { "credits": 2, "options": [["Electives"]] }
           ],
@@ -363,12 +254,12 @@ export const courses = [
             { "credits": 3, "options": [["ASTR 300"]] },
             { "credits": 3, "options": [["MATH 316"], ["PHYS 312"]] },
             { "credits": 4, "options": [["PHYS 203"]] },
-            { "credits": 6, "options": [["PHYS 301", "PHYS 216"]] },
+            { "credits": 3, "options": [["PHYS 301", "PHYS 216"]] },
             { "credits": 4, "options": [["PHYS 408"]] },
             { "credits": 25, "options": [["Electives"]] },
             { "credits": 3, "options": [["ASTR 406"], ["ASTR 407"]] },
-            { "credits": 6, "options": [["ASTR 404", "ASTR 405"]] },
-            { "credits": 6, "options": [["PHYS 304", "PHYS 403"]] }
+            { "credits": 3, "options": [["ASTR 404", "ASTR 405"]] },
+            { "credits": 3, "options": [["PHYS 304", "PHYS 403"]] }
           ]
         }
       ],
@@ -439,7 +330,7 @@ export const courses = [
           "year": "Upper Year Courses",
           "required_courses": [
             {
-              "credits": 6,
+              "credits": 3,
               "options": [
                 ["ATSC 301", "GEOS 300"],
                 ["ATSC 301", "GEOB 300"]
@@ -447,7 +338,7 @@ export const courses = [
             },
             { "credits": 3, "options": [["ENVR 300"]] },
             {
-              "credits": 9,
+              "credits": 3,
               "options": [
                 ["ATSC 303", "ATSC 413", "ATSC 409"],
                 ["GEOS 309", "GEOS 370", "GEOS 373"],
@@ -459,7 +350,7 @@ export const courses = [
               "options": [["EOSC 340"], ["ENVR 410"], ["GEOG 312"]]
             },
             {
-              "credits": 12,
+              "credits": 3,
               "options": [
                 ["ATSC 313", "ATSC 405", "CHEM 302"],
                 ["GEOS 400", "GEOS 401", "GEOS 402"],
@@ -472,136 +363,6 @@ export const courses = [
               "options": [["ATSC 448"], ["GEOS 448"], ["GEOB 448"]]
             },
             { "credits": 24, "options": [["Electives"]] }
-          ]
-        }
-      ],
-      "total_credits_for_degree": 120
-    },
-    {
-      "major": "Behavioural Neuroscience",
-      "min_average": 81.0,
-      "years": [
-        {
-          "year": "First Year",
-          "required_courses": [
-            { "credits": 6, "options": [["Communication Requirement"]] },
-            { "credits": 3, "options": [["BIOL 111"], ["BIOL 112"]] },
-            { "credits": 5, "options": [["BIOL 121", "BIOL 140"]] },
-            {
-              "credits": 4,
-              "options": [["CHEM 110"], ["CHEM 111"], ["CHEM 120"], ["CHEM 121"]]
-            },
-            { "credits": 4, "options": [["CHEM 123"], ["CHEM 130"]] },
-            {
-              "credits": 3,
-              "options": [
-                ["MATH 100"],
-                ["MATH 102"],
-                ["MATH 104"],
-                ["MATH 120"],
-                ["MATH 180"],
-                ["MATH 184"]
-              ]
-            },
-            {
-              "credits": 3,
-              "options": [["MATH 101"], ["MATH 103"], ["MATH 105"], ["MATH 121"]]
-            },
-            {
-              "credits": 3,
-              "options": [["PHYS 106"], ["PHYS 107"], ["PHYS 117"], ["PHYS 131"]]
-            }
-          ],
-          "total_credits": 31
-        },
-        {
-          "year": "Second Year",
-          "required_courses": [
-            { "credits": 4, "options": [["CHEM 233", "CHEM 235"]] },
-            { "credits": 6, "options": [["PSYC 101", "PSYC 102"]] },
-            { "credits": 3, "options": [["PSYC 270"]] },
-            { "credits": 8, "options": [["PSYC 277", "PSYC 278"]] },
-            {
-              "credits": 6,
-              "options": [
-                ["BIOL 200"],
-                ["BIOL 201", "BIOC 202"],
-                ["BIOL 204"],
-                ["BIOL 205"]
-              ]
-            },
-            { "credits": 3, "options": [["Electives"]] }
-          ],
-          "total_credits": 30
-        },
-        {
-          "year": "Upper Year Courses",
-          "required_courses": [
-            { "credits": 3, "options": [["PSYC 300"], ["PSYC 301"]] },
-            { "credits": 6, "options": [["PSYC 370", "PSYC 371"]] },
-            {
-              "credits": 6,
-              "options": [
-                [
-                  "PSYC 302",
-                  "PSYC 315",
-                  "PSYC 319",
-                  "PSYC 320",
-                  "PSYC 322",
-                  "PSYC 325",
-                  "PSYC 412",
-                  "PSYC 413",
-                  "PSYC 414"
-                ],
-                [
-                  "PSYC 305",
-                  "PSYC 307",
-                  "PSYC 308",
-                  "PSYC 321",
-                  "PSYC 358",
-                  "PSYC 403",
-                  "PSYC 407",
-                  "PSYC 408",
-                  "PSYC 415",
-                  "PSYC 418"
-                ],
-                [
-                  "PSYC 311",
-                  "PSYC 314",
-                  "PSYC 331",
-                  "PSYC 350",
-                  "PSYC 401",
-                  "PSYC 402",
-                  "PSYC 420"
-                ]
-              ]
-            },
-            { "credits": 14, "options": [["Electives"]] },
-            {
-              "credits": 12,
-              "options": [
-                [
-                  "PSYC 348",
-                  "PSYC 361",
-                  "PSYC 363",
-                  "PSYC 364",
-                  "PSYC 365",
-                  "PSYC 367",
-                  "PSYC 368",
-                  "PSYC 388",
-                  "PSYC 448",
-                  "PSYC 460",
-                  "PSYC 461",
-                  "PSYC 462",
-                  "PSYC 463",
-                  "PSYC 466",
-                  "PSYC 469",
-                  "PSYC 472",
-                  "PSYC 488"
-                ]
-              ]
-            },
-            { "credits": 18, "options": [["Electives"]] }
           ]
         }
       ],
@@ -643,7 +404,7 @@ export const courses = [
             { "credits": 3, "options": [["BIOL 234"]] },
             { "credits": 3, "options": [["CHEM 205"]] },
             { "credits": 4, "options": [["CHEM 203"]] },
-            { "credits": 4, "options": [["CHEM 213", "CHEM 245"]] },
+            { "credits": 2, "options": [["CHEM 213", "CHEM 245"]] },
             { "credits": 3, "options": [["STAT 201"], ["CPSC 203"]] },
             { "credits": 7, "options": [["Electives"]] }
           ],
@@ -720,10 +481,10 @@ export const courses = [
               "credits": 3,
               "options": [["Additional Communication Requirement"]]
             },
-            { "credits": 9, "options": [["BIOL 200", "BIOL 230", "BIOL 260"]] },
+            { "credits": 3, "options": [["BIOL 200", "BIOL 230", "BIOL 260"]] },
             { "credits": 3, "options": [["BIOL 233"], ["BIOL 234"]] },
             {
-              "credits": 8,
+              "credits": 4,
               "options": [
                 ["BIOL 203", "BIOL 204"],
                 ["BIOL 203", "BIOL 205"],
@@ -928,7 +689,7 @@ export const courses = [
             { "credits": 3, "options": [["MATH 200"], ["MATH 226"]] },
             { "credits": 3, "options": [["MATH 220"]] },
             {
-              "credits": 6,
+              "credits": 2,
               "options": [["MATH 221"], ["MATH 223"], ["MATH 215"]]
             },
             { "credits": 3, "options": [["CPSC 210"], ["MATH 210"]] },
@@ -1034,7 +795,7 @@ export const courses = [
               "options": [["CHEM 121"], ["CHEM 111"], ["CHEM 141"]]
             },
             { "credits": 4, "options": [["CHEM 123"]] },
-            { "credits": 6, "options": [["EOSC 100-level"], ["ATSC 100-level"]] },
+            { "credits": 3, "options": [["EOSC 100-level"], ["ATSC 100-level"]] },
             { "credits": 1, "options": [["EOSC 111"]] },
             {
               "credits": 3,
@@ -1142,7 +903,7 @@ export const courses = [
                 ["CPSC 203"]
               ]
             },
-            { "credits": 9, "options": [["FSCT 280", "FSCT 290"]] }
+            { "credits": 3, "options": [["FSCT 280", "FSCT 290"]] }
           ],
           "total_credits": 33
         },
@@ -1153,9 +914,9 @@ export const courses = [
               "credits": 15,
               "options": [["BIOC 303"], ["BIOC 301"], ["BIOL 335"], ["Electives"]]
             },
-            { "credits": 18, "options": [["FSCT 380", "FSCT 390"]] },
+            { "credits": 9, "options": [["FSCT 380", "FSCT 390"]] },
             {
-              "credits": 21,
+              "credits": 10,
               "options": [
                 ["BIOC 402", "BIOC 410"],
                 ["BIOC 403"],
@@ -1170,7 +931,7 @@ export const courses = [
                 ["Electives"]
               ]
             },
-            { "credits": 11, "options": [["FSCT 480", "FSCT 490"]] }
+            { "credits": 5, "options": [["FSCT 480", "FSCT 490"]] }
           ]
         }
       ],
