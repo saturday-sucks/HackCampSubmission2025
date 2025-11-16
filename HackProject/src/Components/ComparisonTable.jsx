@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 // Helper to format nested course options
 function formatCourseOptions(options) {
-  return options.map((inner) => inner.join(" + ")).join(", ");
+  return options.map((inner) => inner.join(" + ")).join(" / ");
 }
 
 // Gather requirements for selected majors
