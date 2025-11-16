@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Academic Record Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, select { margin-bottom: 5px; }
+    button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Academic Record</h1>
+
+  <!-- GPA input -->
+  <label for="gpa">Current GPA:</label>
+  <input type="number" id="gpa" min="0" max="4.33" step="0.01"><br><br>
+
+  <!-- Major input -->
+  <label for="major">Current Major:</label>
+  <input type="text" id="major" placeholder="e.g. Computer Science"><br><br>
+
+  <!-- Year input -->
+  <label for="year">Year:</label>
+  <select id="year">
+    <option value="1">1st Year</option>
+    <option value="2">2nd Year</option>
+    <option value="3">3rd Year</option>
+    <option value="4">4th Year</option>
+  </select><br><br>
+
+  <!-- Courses input -->
+  <div id="coursesContainer">
+    <label>Completed Courses:</label><br>
+    <!-- Course inputs will be added here -->
+  </div>
+
+  <button type="button" id="addCourse">Add Course</button><br><br>
+
+  <button type="button" id="submitRecord">Submit</button>
+
+  <div id="recordOutput" style="margin-top:20px;"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
