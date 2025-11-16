@@ -1,7 +1,7 @@
 import React from "react";
 
 // ---------------------------
-// ExpandableText
+// ExpandableText (UNCHANGED)
 // ---------------------------
 function ExpandableText({ text, completed }) {
   const [expanded, setExpanded] = React.useState(false);
@@ -50,6 +50,7 @@ function ExpandableText({ text, completed }) {
           }}
         >
           <span style={textStyle}>{rest}</span>
+
           <div
             style={{
               marginTop: "4px",
@@ -80,7 +81,7 @@ function ExpandableText({ text, completed }) {
 }
 
 // ---------------------------
-// Final MERGED Planner
+// NEW PLANNER WITH CREDITS
 // ---------------------------
 export default function Planner({
   majors,
@@ -93,9 +94,9 @@ export default function Planner({
   const selectedObjs = majors.filter((m) => selectedMajors.includes(m.major));
   const lowerYears = ["First Year", "Second Year"];
 
-  // -----------------------------------
-  // COURSE BUILDING + MERGE LOGIC
-  // -----------------------------------
+  // ----------------------------
+  // BUILD COURSES (same logic)
+  // ----------------------------
   const buildCourses = (yearFilter) => {
     const raw = [];
 
@@ -103,11 +104,10 @@ export default function Planner({
       m.years.forEach((yy) => {
         if (yearFilter(yy.year) && yy.required_courses) {
           yy.required_courses.forEach((c) => {
-            const courseOptions = c.options || [[c.course]];
+            const options = c.options || [[c.course]];
 
-            // Expand multi-choice like ["A","B"]
-            if (courseOptions.length === 1 && courseOptions[0].length > 1) {
-              courseOptions[0].forEach((single) => {
+            if (options.length === 1 && options[0].length > 1) {
+              options[0].forEach((single) => {
                 raw.push({
                   ...c,
                   majors: [m.major],
@@ -117,14 +117,14 @@ export default function Planner({
                 });
               });
             } else {
-              const display = courseOptions
+              const display = options
                 .map((opt) => opt.join(" + "))
                 .join(" / ");
 
               raw.push({
                 ...c,
                 majors: [m.major],
-                options: courseOptions,
+                options,
                 courseDisplay: display,
                 credits: c.credits ?? 0,
               });
@@ -134,16 +134,16 @@ export default function Planner({
       });
     });
 
-    // Deduplicate and merge majors
+    // merge duplicates
     const map = new Map();
 
     raw.forEach((c) => {
       if (!map.has(c.courseDisplay)) {
         map.set(c.courseDisplay, c);
       } else {
-        const existing = map.get(c.courseDisplay);
+        const ex = map.get(c.courseDisplay);
         c.majors.forEach((mj) => {
-          if (!existing.majors.includes(mj)) existing.majors.push(mj);
+          if (!ex.majors.includes(mj)) ex.majors.push(mj);
         });
       }
     });
@@ -158,9 +158,9 @@ export default function Planner({
 
   const upperYearCourses = buildCourses((y) => !lowerYears.includes(y));
 
-  // -----------------------------------
-  // CHECKBOX TOGGLE
-  // -----------------------------------
+  // ----------------------------
+  // TOGGLE
+  // ----------------------------
   const toggleCourse = (courseDisplay) => {
     if (takenCourses.includes(courseDisplay)) {
       setTakenCourses(takenCourses.filter((x) => x !== courseDisplay));
@@ -169,9 +169,20 @@ export default function Planner({
     }
   };
 
-  // -----------------------------------
-  // RENDER
-  // -----------------------------------
+  // ----------------------------
+  // CREDIT CALCULATIONS
+  // ----------------------------
+  const calcCredits = (courses) => {
+    const total = courses.reduce((sum, c) => sum + (c.credits ?? 0), 0);
+    const completed = courses
+      .filter((c) => takenCourses.includes(c.courseDisplay))
+      .reduce((sum, c) => sum + (c.credits ?? 0), 0);
+    return { total, completed, remaining: total - completed };
+  };
+
+  // ----------------------------
+  // UI
+  // ----------------------------
   return (
     <section className="planner">
       <h2>Year-by-year planner</h2>
@@ -180,7 +191,7 @@ export default function Planner({
         <p>Select at least one major to see planner.</p>
       ) : (
         <div>
-          {/* ---------------- Major Filter ---------------- */}
+          {/* === FILTER === */}
           <div style={{ marginBottom: "1rem" }}>
             <label>Filter by major: </label>
             <select
@@ -196,22 +207,36 @@ export default function Planner({
             </select>
           </div>
 
-          {/* ---------------- LOWER YEARS ---------------- */}
-          {lowerYearRows.map((yr) => (
-            <div key={yr.year} className="year">
-              <h3>{yr.year}</h3>
+          {/* ===================== LOWER YEARS ===================== */}
+          {lowerYearRows.map((yr) => {
+            const filtered = yr.courses.filter(
+              (c) =>
+                majorFilter === "All" || c.majors.includes(majorFilter)
+            );
 
-              {yr.courses.length === 0 ? (
-                <p>No required courses for this year.</p>
-              ) : (
-                <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-                  {yr.courses
-                    .filter(
-                      (c) =>
-                        majorFilter === "All" || c.majors.includes(majorFilter)
-                    )
-                    .map((c) => {
-                      const completed = takenCourses.includes(c.courseDisplay);
+            const creditStats = calcCredits(filtered);
+
+            return (
+              <div key={yr.year} className="year">
+                <h3>
+                  {yr.year} —{" "}
+                  <span style={{ fontSize: "0.85em" }}>
+                    Total: <strong>{creditStats.total}</strong> credits |{" "}
+                    Completed: <strong>{creditStats.completed}</strong> |{" "}
+                    Remaining:{" "}
+                    <strong style={{ color: "red" }}>
+                      {creditStats.remaining}
+                    </strong>
+                  </span>
+                </h3>
+
+                {filtered.length === 0 ? (
+                  <p>No required courses for this year.</p>
+                ) : (
+                  <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                    {filtered.map((c) => {
+                      const done = takenCourses.includes(c.courseDisplay);
+
                       return (
                         <li key={c.courseDisplay} style={{ marginBottom: 8 }}>
                           <div
@@ -223,7 +248,7 @@ export default function Planner({
                           >
                             <input
                               type="checkbox"
-                              checked={completed}
+                              checked={done}
                               onChange={() => toggleCourse(c.courseDisplay)}
                             />
 
@@ -231,7 +256,7 @@ export default function Planner({
                               <strong>
                                 <ExpandableText
                                   text={c.courseDisplay}
-                                  completed={completed}
+                                  completed={done}
                                 />
                               </strong>{" "}
                               <em>
@@ -242,71 +267,73 @@ export default function Planner({
                         </li>
                       );
                     })}
-                </ul>
-              )}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
 
-              <p className="missing">
-                Missing courses this year:{" "}
-                {
-                  yr.courses.filter(
-                    (c) =>
-                      (majorFilter === "All" ||
-                        c.majors.includes(majorFilter)) &&
-                      !takenCourses.includes(c.courseDisplay)
-                  ).length
-                }
-              </p>
-            </div>
-          ))}
-
-          {/* ---------------- UPPER YEARS ---------------- */}
+          {/* ===================== UPPER YEARS ===================== */}
           <div className="year">
-            <h3>Upper-Year Courses</h3>
+            {(() => {
+              const filtered = upperYearCourses.filter(
+                (c) =>
+                  majorFilter === "All" || c.majors.includes(majorFilter)
+              );
+              const creditStats = calcCredits(filtered);
 
-            {upperYearCourses.length === 0 ? (
-              <p>No upper-year courses.</p>
-            ) : (
-              <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-                {upperYearCourses
-                  .filter(
-                    (c) =>
-                      majorFilter === "All" || c.majors.includes(majorFilter)
-                  )
-                  .map((c) => {
-                    const completed = takenCourses.includes(c.courseDisplay);
+              return (
+                <>
+                  <h3>
+                    Upper-Year Courses —{" "}
+                    <span style={{ fontSize: "0.85em" }}>
+                      Total: <strong>{creditStats.total}</strong> credits |{" "}
+                      Completed: <strong>{creditStats.completed}</strong> |{" "}
+                      Remaining:{" "}
+                      <strong style={{ color: "red" }}>
+                        {creditStats.remaining}
+                      </strong>
+                    </span>
+                  </h3>
 
-                    return (
-                      <li key={c.courseDisplay} style={{ marginBottom: 8 }}>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "flex-start",
-                            gap: 8,
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={completed}
-                            onChange={() => toggleCourse(c.courseDisplay)}
-                          />
+                  <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                    {filtered.map((c) => {
+                      const done = takenCourses.includes(c.courseDisplay);
 
-                          <div style={{ flex: 1 }}>
-                            <strong>
-                              <ExpandableText
-                                text={c.courseDisplay}
-                                completed={completed}
-                              />
-                            </strong>{" "}
-                            <em>
-                              ({c.credits} cr) — {c.majors.join(", ")}
-                            </em>
+                      return (
+                        <li key={c.courseDisplay} style={{ marginBottom: 8 }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 8,
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={done}
+                              onChange={() => toggleCourse(c.courseDisplay)}
+                            />
+
+                            <div style={{ flex: 1 }}>
+                              <strong>
+                                <ExpandableText
+                                  text={c.courseDisplay}
+                                  completed={done}
+                                />
+                              </strong>{" "}
+                              <em>
+                                ({c.credits} cr) — {c.majors.join(", ")}
+                              </em>
+                            </div>
                           </div>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              );
+            })()}
           </div>
         </div>
       )}
