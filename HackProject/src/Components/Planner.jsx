@@ -1,16 +1,96 @@
 import React from "react";
 
+function ExpandableText({ text, completed }) {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const parts = text.split(" / ");
+  const firstPart = parts[0];
+  const rest = parts.slice(1);
+
+  const textStyle = {
+    textDecoration: completed ? "line-through" : "none",
+  };
+
+  return (
+    <span style={completed}>
+      <span>
+        {firstPart}
+        {parts.length > 1 && !expanded && (
+          <button
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              setExpanded(true);
+            }}
+            style={{
+              border: "none",
+              background: "none",
+              padding: 0,
+              marginLeft: "4px",
+              color: "#007bff",
+              cursor: "pointer",
+              fontSize: "0.9em",
+            }}
+          >
+            ...
+          </button>
+        )}
+      </span>
+
+      {expanded && (
+        <span
+          style={{
+            display: "block",
+            whiteSpace: "pre-line",
+            marginTop: "3px",
+          }}
+        >
+          {rest.join("\n")}
+
+          <div
+            style={{
+              marginTop: "4px",
+              fontSize: "0.75em",
+              color: "#666",
+              display: "flex",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
+          >
+            <button
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                setExpanded(false);
+              }}
+              style={{
+                border: "none",
+                background: "none",
+                padding: 0,
+                color: "#888",
+                cursor: "pointer",
+                textDecoration: "underline",
+                marginLeft: "auto",
+              }}
+            >
+              show less
+            </button>
+          </div>
+        </span>
+      )}
+    </span>
+  );
+}
+
 export default function Planner({
   majors,
   selectedMajors,
   takenCourses,
   setTakenCourses,
 }) {
-  // Filter selected majors
   const selectedObjs = majors.filter((m) => selectedMajors.includes(m.major));
   const lowerYears = ["First Year", "Second Year"];
 
-  // Build lower-year courses
   const lowerYearRows = lowerYears.map((year) => {
     const courses = [];
 
@@ -57,7 +137,7 @@ export default function Planner({
     return { year, courses: uniq };
   });
 
-  // Collect all upper-year courses (any year not in lowerYears)
+  // Upper-year courses
   const upperYearCourses = [];
   selectedObjs.forEach((m) => {
     m.years.forEach((yy) => {
@@ -117,20 +197,32 @@ export default function Planner({
                 <ul>
                   {yr.courses.map((c) => (
                     <li key={c.courseDisplay}>
-                      <label>
+                      <label
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "flex-start",
+                        }}
+                      >
                         <input
-                            type="checkbox"
-                            checked={takenCourses.some(taken => c.courseDisplay.includes(taken))}
-                            onChange={() => {
-                                const mainCourse = c.courseDisplay.split(' / ')[0];
-                                if (takenCourses.includes(mainCourse)) {
-                                setTakenCourses(takenCourses.filter(x => x !== mainCourse))
-                                } else {
-                                setTakenCourses([...takenCourses, mainCourse])
-                                }
-                            }}
-                            />
-                        <strong>{c.courseDisplay}</strong>{" "}
+                          type="checkbox"
+                          checked={takenCourses.includes(c.courseDisplay)}
+                          onChange={() => {
+                            if (takenCourses.includes(c.courseDisplay))
+                              setTakenCourses(
+                                takenCourses.filter(
+                                  (x) => x !== c.courseDisplay
+                                )
+                              );
+                            else
+                              setTakenCourses([
+                                ...takenCourses,
+                                c.courseDisplay,
+                              ]);
+                          }}
+                        />
+                        <strong>
+                          <ExpandableText text={c.courseDisplay} />
+                        </strong>{" "}
                         <em>
                           ({c.credits ?? "?"} cr) — {c.major}
                         </em>
@@ -162,17 +254,19 @@ export default function Planner({
                     <label>
                       <input
                         type="checkbox"
-                        checked={takenCourses.some(taken => c.courseDisplay.includes(taken))}
+                        checked={takenCourses.includes(c.courseDisplay)}
                         onChange={() => {
-                            const mainCourse = c.courseDisplay.split(' / ')[0];
-                            if (takenCourses.includes(mainCourse)) {
-                            setTakenCourses(takenCourses.filter(x => x !== mainCourse))
-                            } else {
-                            setTakenCourses([...takenCourses, mainCourse])
-                            }
+                          if (takenCourses.includes(c.courseDisplay))
+                            setTakenCourses(
+                              takenCourses.filter((x) => x !== c.courseDisplay)
+                            );
+                          else
+                            setTakenCourses([...takenCourses, c.courseDisplay]);
                         }}
-                        />
-                      <strong>{c.courseDisplay}</strong>{" "}
+                      />
+                      <strong>
+                        <ExpandableText text={c.courseDisplay} />
+                      </strong>{" "}
                       <em>
                         ({c.credits ?? "?"} cr) — {c.major}
                       </em>

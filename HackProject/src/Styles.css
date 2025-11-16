@@ -168,25 +168,52 @@ footer{margin-top:24px;color:#4b5563}
   transform: translateY(-2px);
 }
 
-
 @media print {
-  /* Hide everything except the planner */
-  body * {
-    visibility: hidden;
-  }
-  .planner, .planner * {
-    visibility: visible;
-  }
-  .planner {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: 20px;
+  .enter-info-btn, .download-btn, header, footer, 
+  .major-selector, .comparison, .user-display {
+    display: none !important;
   }
   
-  /* Make sure checkboxes show as checked in print */
-  input[type="checkbox"]:checked {
-    background-color: black !important;
+  .app {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 15px !important;
+  }
+  
+  .planner {
+    line-height: 1.4 !important;
+  }
+  
+  .year {
+    margin-bottom: 12px !important; /* Comfortable gap between years */
+    padding: 8px !important;
+    page-break-inside: avoid;
+  }
+  
+  .year h3 {
+    margin: 0 0 8px 0 !important;
+    padding: 0 !important;
+  }
+  
+  .year ul {
+    margin: 5px 0 !important;
+    padding: 0 !important;
+  }
+  
+  .year li {
+    margin: 0 0 4px 0 !important;
+    padding: 2px 0 !important;
+    line-height: 1.4 !important;
+  }
+  
+  .missing {
+    margin: 6px 0 0 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+  }
+  
+  /* Reset only specific elements, not everything */
+  body {
+    line-height: 1.4 !important;
   }
 }

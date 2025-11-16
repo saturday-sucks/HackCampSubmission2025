@@ -3,11 +3,6 @@ import MajorSelector from './Components/MajorSelector'
 import ComparisonTable from './Components/ComparisonTable'
 import Planner from './Components/Planner'
 
-
-const printPlanner = () => {
-  window.print();
-};
-
 const UserForm = ({ onSubmit, onCancel }) => {
  const [gpa, setGpa] = useState('');
  const [major, setMajor] = useState('');
@@ -129,13 +124,90 @@ const [data, setData] = useState(null)
 const [selectedMajors, setSelectedMajors] = useState([])
 const [takenCourses, setTakenCourses] = useState([])
 
-
 // For showing/hiding the user form
 const [showForm, setShowForm] = useState(false);
 const [userInfo, setUserInfo] = useState(null);
 
+const printPlanner = () => {
+  // Create a hidden iframe for printing
+  const printFrame = document.createElement('iframe');
+  printFrame.style.position = 'fixed';
+  printFrame.style.right = '0';
+  printFrame.style.bottom = '0';
+  printFrame.style.width = '0';
+  printFrame.style.height = '0';
+  printFrame.style.border = 'none';
+  
+  document.body.appendChild(printFrame);
 
+  const printDocument = printFrame.contentWindow.document;
+  
+  printDocument.open();
+  printDocument.write(`
+    <html>
+      <head>
+        <title>UBC Major Planner</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; }
+          .major { margin-bottom: 25px; }
+          .year { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+          .course { margin: 12px 0; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        </style>
+      </head>
+      <body>
+        <h1>UBC Major Planner</h1>
+        <h2>Year-by-Year Planner</h2>
+        ${selectedMajors.length === 0 ? 
+          '<p>Select at least one major to see planner.</p>' : 
+          `
+          <div>
+            ${data
+              .filter(m => selectedMajors.includes(m.major))
+              .map(m => `
+                <div class="major">
+                  <h3>${m.major}</h3>
+                  ${m.years.map(y => `
+                    <div class="year">
+                      <h4>${y.year}</h4>
+                      <div>
+                        ${(y.required_courses || []).map(c => {
+                          const courseOptions = c.options || [[c.course]];
+                          const courseDisplay = courseOptions.map(opt => opt.join(' + ')).join(' / ');
+                          const isTaken = takenCourses.some(taken => courseDisplay.includes(taken));
+                          return `
+                          <div class="course">
+                            <div style="display: flex; align-items: flex-start; gap: 8px;">
+                              <div style="font-size: 16px;">${isTaken ? '☑' : '☐'}</div>
+                              <div>
+                                <div style="font-weight: bold; margin-bottom: 4px;">${courseDisplay}</div>
+                                <div style="color: #666; font-size: 14px;">(${c.credits || '?'} credits) — ${c.major || m.major}</div>
+                              </div>
+                            </div>
+                          </div>
+                          `;
+                        }).join('')}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              `).join('')}
+          </div>
+          `
+        }
+      </body>
+    </html>
+  `);
+  printDocument.close();
 
+  // Print from the iframe
+  printFrame.contentWindow.focus();
+  printFrame.contentWindow.print();
+  
+  // Clean up
+  setTimeout(() => {
+    document.body.removeChild(printFrame);
+  }, 100);
+};
 
 useEffect(() => {
 fetch('/src/data/courses.json')
