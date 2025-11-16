@@ -4,6 +4,10 @@ import ComparisonTable from './Components/ComparisonTable'
 import Planner from './Components/Planner'
 
 
+const printPlanner = () => {
+  window.print();
+};
+
 const UserForm = ({ onSubmit, onCancel }) => {
  const [gpa, setGpa] = useState('');
  const [major, setMajor] = useState('');
@@ -169,6 +173,9 @@ return (
   <button className="enter-info-btn" onClick={() => setShowForm(true)}>
     Enter Your Info
   </button>
+  <button className="download-btn" onClick={printPlanner}>
+  📄 Download Planner PDF
+   </button>
 
 
 {/* Show form only when needed */}
