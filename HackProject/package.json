@@ -1,11 +1,15 @@
 {
-    "name": "ubc-major-planner",
+    "name": "HackCampSubmission2025",
     "version": "1.0.0",
     "private": true,
+    "type": "module",
+    "homepage": "https://saturday-sucks.github.io/HackCampSubmission2025",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview --port 5173"
+        "preview": "vite preview",
+        "pre-deploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "html2canvas": "^1.4.1",
@@ -14,6 +18,8 @@
         "react-dom": "18.2.0"
     },
     "devDependencies": {
+        "@vitejs/plugin-react": "^5.1.1",
+        "gh-pages": "^6.3.0",
         "vite": "5.0.0"
     }
 }

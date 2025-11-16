@@ -1,4 +1,4 @@
-[
+export const courses = [
     {
       "major": "Computer Science",
       "min_average": 78.9,

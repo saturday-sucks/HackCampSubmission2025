@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MajorSelector from './Components/MajorSelector';
 import ComparisonTable from './Components/ComparisonTable';
 import Planner from './Components/Planner';
+import {courses} from './data/courses'
 
 const printPlanner = () => {
   window.print();
@@ -100,18 +101,13 @@ const UserForm = ({ onSubmit, onCancel }) => {
 };
 
 export default function App() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(courses);
   const [selectedMajors, setSelectedMajors] = useState([]);
   const [takenCourses, setTakenCourses] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
-  useEffect(() => {
-    fetch('/src/data/courses.json')
-      .then(r => r.json())
-      .then(setData)
-      .catch(err => console.error('Failed to load courses.json', err));
-  }, []);
+
 
   if (!data) return <div className="app">Loading data...</div>;
 
