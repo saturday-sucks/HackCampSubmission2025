@@ -95,6 +95,17 @@ export default function Planner({
   const lowerYears = ["First Year", "Second Year"];
 
   // ----------------------------
+  // HELPER: Check if course is completed
+  // ----------------------------
+  const isCourseCompleted = (course) => {
+    if (!course.options) return false;
+    // A course is complete if any option is fully completed
+    return course.options.some((option) =>
+      option.every((c) => takenCourses.includes(c))
+    );
+  };
+
+  // ----------------------------
   // BUILD COURSES (same logic)
   // ----------------------------
   const buildCourses = (yearFilter) => {
@@ -161,11 +172,11 @@ export default function Planner({
   // ----------------------------
   // TOGGLE
   // ----------------------------
-  const toggleCourse = (courseDisplay) => {
-    if (takenCourses.includes(courseDisplay)) {
-      setTakenCourses(takenCourses.filter((x) => x !== courseDisplay));
+  const toggleCourse = (courseName) => {
+    if (takenCourses.includes(courseName)) {
+      setTakenCourses(takenCourses.filter((x) => x !== courseName));
     } else {
-      setTakenCourses([...takenCourses, courseDisplay]);
+      setTakenCourses([...takenCourses, courseName]);
     }
   };
 
@@ -175,7 +186,7 @@ export default function Planner({
   const calcCredits = (courses) => {
     const total = courses.reduce((sum, c) => sum + (c.credits ?? 0), 0);
     const completed = courses
-      .filter((c) => takenCourses.includes(c.courseDisplay))
+      .filter((c) => isCourseCompleted(c))
       .reduce((sum, c) => sum + (c.credits ?? 0), 0);
     return { total, completed, remaining: total - completed };
   };
@@ -210,8 +221,7 @@ export default function Planner({
           {/* ===================== LOWER YEARS ===================== */}
           {lowerYearRows.map((yr) => {
             const filtered = yr.courses.filter(
-              (c) =>
-                majorFilter === "All" || c.majors.includes(majorFilter)
+              (c) => majorFilter === "All" || c.majors.includes(majorFilter)
             );
 
             const creditStats = calcCredits(filtered);
@@ -235,7 +245,7 @@ export default function Planner({
                 ) : (
                   <ul style={{ listStyle: "none", paddingLeft: 0 }}>
                     {filtered.map((c) => {
-                      const done = takenCourses.includes(c.courseDisplay);
+                      const done = isCourseCompleted(c);
 
                       return (
                         <li key={c.courseDisplay} style={{ marginBottom: 8 }}>
@@ -248,8 +258,12 @@ export default function Planner({
                           >
                             <input
                               type="checkbox"
-                              checked={done}
-                              onChange={() => toggleCourse(c.courseDisplay)}
+                              checked={c.options.some((opt) =>
+                                opt.every((o) => takenCourses.includes(o))
+                              )}
+                              onChange={() =>
+                                toggleCourse(c.courseDisplay)
+                              }
                             />
 
                             <div style={{ flex: 1 }}>
@@ -277,8 +291,7 @@ export default function Planner({
           <div className="year">
             {(() => {
               const filtered = upperYearCourses.filter(
-                (c) =>
-                  majorFilter === "All" || c.majors.includes(majorFilter)
+                (c) => majorFilter === "All" || c.majors.includes(majorFilter)
               );
               const creditStats = calcCredits(filtered);
 
@@ -298,7 +311,7 @@ export default function Planner({
 
                   <ul style={{ listStyle: "none", paddingLeft: 0 }}>
                     {filtered.map((c) => {
-                      const done = takenCourses.includes(c.courseDisplay);
+                      const done = isCourseCompleted(c);
 
                       return (
                         <li key={c.courseDisplay} style={{ marginBottom: 8 }}>
@@ -311,8 +324,12 @@ export default function Planner({
                           >
                             <input
                               type="checkbox"
-                              checked={done}
-                              onChange={() => toggleCourse(c.courseDisplay)}
+                              checked={c.options.some((opt) =>
+                                opt.every((o) => takenCourses.includes(o))
+                              )}
+                              onChange={() =>
+                                toggleCourse(c.courseDisplay)
+                              }
                             />
 
                             <div style={{ flex: 1 }}>
