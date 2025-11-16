@@ -77,14 +77,15 @@ export default function ComparisonTable({
     }
   };
 
-  const minAvg =
-    selectedMajors.length === 0
-      ? "N/A"
-      : Math.max(
-          ...majors
-            .filter((m) => selectedMajors.includes(m.major))
-            .map((m) => m.min_average ?? 0)
-        );
+  // Proper handling of minimal average
+  const relevantMajors = majors.filter((m) =>
+    selectedMajors.includes(m.major)
+  );
+  const minAvgValues = relevantMajors
+    .map((m) => m.min_average)
+    .filter((v) => v !== undefined && v !== null);
+
+  const minAvg = minAvgValues.length === 0 ? "N/A" : Math.max(...minAvgValues);
 
   return (
     <section className="comparison">
@@ -110,7 +111,7 @@ export default function ComparisonTable({
 
       <div className="summary">
         Selected majors: {selectedMajors.join(", ") || "—"} — Minimal required
-        average (suggested): <strong>{minAvg === 0 ? "N/A" : minAvg}</strong>
+        average (suggested): <strong>{minAvg}</strong>
       </div>
 
       <div className="table-wrap">

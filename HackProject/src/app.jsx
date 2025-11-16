@@ -178,9 +178,7 @@ setTakenCourses={setTakenCourses}
 </main>
 
 
-<footer>
-<small>Sample app — adapt the JSON file in <code>src/data/courses.json</code> to match your real database.</small>
-</footer>
+
 </div>
 )
 }
