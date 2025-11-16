@@ -166,7 +166,9 @@ return (
 </header>
 
 <main>
-  <button onClick={() => setShowForm(true)}>Enter Your Info</button>
+  <button className="enter-info-btn" onClick={() => setShowForm(true)}>
+    Enter Your Info
+  </button>
 
 
 {/* Show form only when needed */}
