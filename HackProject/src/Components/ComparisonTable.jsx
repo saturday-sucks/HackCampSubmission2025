@@ -1,75 +1,84 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from "react";
 
-function gatherRequirements(majorsData, selectedMajors, selectedYear) {
-  const map = new Map()
-  const selectedObjs = majorsData.filter(m => selectedMajors.includes(m.major))
-
-  selectedObjs.forEach(m => {
-    m.years.forEach(y => {
-      if (selectedYear && selectedYear !== 'All' && y.year !== selectedYear) return
-
-      (y.required_courses || []).forEach(c => {
-        c.options.forEach(option => {
-          const code = option.join(' + ')
-          if (!map.has(code)) map.set(code, { course: code, byMajor: {} })
-          map.get(code).byMajor[m.major] = true
-        })
-      })
-    })
-  })
-
-  return Array.from(map.values()).sort((a, b) => a.course.localeCompare(b.course))
+// Helper to format nested course options
+function formatCourseOptions(options) {
+  return options.map((inner) => inner.join(" + ")).join(", ");
 }
 
-export default function ComparisonTable({ majors, selectedMajors, takenCourses, setTakenCourses }) {
-  const [selectedYear, setSelectedYear] = useState('All')
+// Gather requirements for selected majors
+function gatherRequirements(majorsData, selectedMajors) {
+  const map = new Map();
 
-  // Get all possible years from selected majors
-  const allYears = Array.from(
-    new Set(
-      majors
-        .filter(m => selectedMajors.includes(m.major))
-        .flatMap(m => m.years.map(y => y.year))
-    )
-  )
+  const selectedObjs = majorsData.filter((m) =>
+    selectedMajors.includes(m.major)
+  );
 
+  selectedObjs.forEach((m) => {
+    m.years.forEach((y) => {
+      (y.required_courses || []).forEach((c) => {
+        const courseOptions = c.options || [[c.course]];
+
+        // Case: single inner array with multiple courses → split into separate options
+        if (courseOptions.length === 1 && courseOptions[0].length > 1) {
+          courseOptions[0].forEach((singleCourse) => {
+            const code = singleCourse; // each course becomes its own key
+            if (!map.has(code))
+              map.set(code, {
+                course: code,
+                byMajor: {},
+                options: [[singleCourse]],
+              });
+            map.get(code).byMajor[m.major] = true;
+          });
+        } else {
+          const code = formatCourseOptions(c.options);
+          if (!map.has(code))
+            map.set(code, { course: code, byMajor: {}, options: c.options });
+          map.get(code).byMajor[m.major] = true;
+        }
+      });
+    });
+  });
+
+  return Array.from(map.values()).sort((a, b) =>
+    a.course.localeCompare(b.course)
+  );
+}
+
+export default function ComparisonTable({
+  majors,
+  selectedMajors,
+  takenCourses,
+  setTakenCourses,
+}) {
   const rows = useMemo(
-    () => gatherRequirements(majors, selectedMajors, selectedYear),
-    [majors, selectedMajors, selectedYear]
-  )
+    () => gatherRequirements(majors, selectedMajors),
+    [majors, selectedMajors]
+  );
 
-  const toggleTaken = course => {
-    if (takenCourses.includes(course)) setTakenCourses(takenCourses.filter(c => c !== course))
-    else setTakenCourses([...takenCourses, course])
-  }
+  const toggleTaken = (course) => {
+    if (takenCourses.includes(course)) {
+      setTakenCourses(takenCourses.filter((c) => c !== course));
+    } else {
+      setTakenCourses([...takenCourses, course]);
+    }
+  };
 
   const minAvg =
     selectedMajors.length === 0
-      ? 'N/A'
-      : Math.max(...majors.filter(m => selectedMajors.includes(m.major)).map(m => m.min_average ?? 0))
+      ? "N/A"
+      : Math.max(
+          ...majors
+            .filter((m) => selectedMajors.includes(m.major))
+            .map((m) => m.min_average ?? 0)
+        );
 
   return (
     <section className="comparison">
       <h2>Comparison</h2>
-
-      {/* Year selector dropdown */}
-      <div style={{ marginBottom: '10px' }}>
-        <label>
-          Show courses for year:{' '}
-          <select value={selectedYear} onChange={e => setSelectedYear(e.target.value)}>
-            <option value="All">All</option>
-            {allYears.map(y => (
-              <option key={y} value={y}>
-                {y}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-
       <div className="summary">
-        Selected majors: {selectedMajors.join(', ') || '—'} — Minimal required average (suggested):{' '}
-        <strong>{minAvg === 0 ? 'N/A' : minAvg}</strong>
+        Selected majors: {selectedMajors.join(", ") || "—"} — Minimal required
+        average (suggested): <strong>{minAvg === 0 ? "N/A" : minAvg}</strong>
       </div>
 
       <div className="table-wrap">
@@ -77,21 +86,28 @@ export default function ComparisonTable({ majors, selectedMajors, takenCourses, 
           <thead>
             <tr>
               <th>Course</th>
-              {selectedMajors.map(s => (
+              {selectedMajors.map((s) => (
                 <th key={s}>{s}</th>
               ))}
               <th>Taken</th>
             </tr>
           </thead>
           <tbody>
-            {rows.map(r => (
-              <tr key={r.course} className={takenCourses.includes(r.course) ? 'taken' : ''}>
-                <td>{r.course}</td>
-                {selectedMajors.map(s => (
-                  <td key={s}>{r.byMajor[s] ? '✔' : ''}</td>
+            {rows.map((r) => (
+              <tr
+                key={r.course}
+                className={takenCourses.includes(r.course) ? "taken" : ""}
+              >
+                <td>{formatCourseOptions(r.options)}</td>
+                {selectedMajors.map((s) => (
+                  <td key={s}>{r.byMajor[s] ? "✔" : ""}</td>
                 ))}
                 <td>
-                  <input type="checkbox" checked={takenCourses.includes(r.course)} onChange={() => toggleTaken(r.course)} />
+                  <input
+                    type="checkbox"
+                    checked={takenCourses.includes(r.course)}
+                    onChange={() => toggleTaken(r.course)}
+                  />
                 </td>
               </tr>
             ))}
@@ -99,5 +115,5 @@ export default function ComparisonTable({ majors, selectedMajors, takenCourses, 
         </table>
       </div>
     </section>
-  )
+  );
 }
