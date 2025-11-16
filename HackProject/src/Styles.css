@@ -12,7 +12,8 @@ body {
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
     margin: 0;
     background: var(--bg);
-    color: #0b0f16
+    color: #0b0f16;
+    padding: 0;
 }
 
 .app {
@@ -88,4 +89,17 @@ td {
 footer {
     margin-top: 24px;
     color: #4b5563
+}
+
+.Banner img {
+    width: 150px;
+    height: 100px;
+    margin: 0;
+}
+
+.Banner {
+    background-color: #000b3f;
+    margin: 0;
+    padding: 0;
+    display: flex;
 }

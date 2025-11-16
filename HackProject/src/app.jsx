@@ -1,64 +1,66 @@
 import React, { useEffect, useState } from 'react'
-import MajorSelector from './components/MajorSelector'
-import ComparisonTable from './components/ComparisonTable'
-import Planner from './components/Planner'
+import MajorSelector from './Components/MajorSelector'
+import ComparisonTable from './Components/ComparisonTable'
+import Planner from './Components/Planner'
+import Banner from './Components/Banner'
 
 
 export default function App() {
-const [data, setData] = useState(null)
-const [selectedMajors, setSelectedMajors] = useState([])
-const [takenCourses, setTakenCourses] = useState([])
+    const [data, setData] = useState(null)
+    const [selectedMajors, setSelectedMajors] = useState([])
+    const [takenCourses, setTakenCourses] = useState([])
 
 
-useEffect(() => {
-fetch('/src/data/courses.json')
-.then(r => r.json())
-.then(setData)
-.catch(err => console.error('Failed to load courses.json', err))
-}, [])
+    useEffect(() => {
+        fetch('/src/data/courses.json')
+            .then(r => r.json())
+            .then(setData)
+            .catch(err => console.error('Failed to load courses.json', err))
+    }, [])
 
 
-if (!data) return <div className="app">Loading data...</div>
+    if (!data) return <div className="app">Loading data...</div>
 
 
-return (
-<div className="app">
-<header>
-<h1>UBC Major Planner</h1>
-<p>Select majors to compare requirements, then mark courses taken/planned.</p>
-</header>
+    return (
+
+        <div className="app">
+            <header className="Banner">
+                <img className="Banner" src="https://live.staticflickr.com/8027/29016431894_d3a9befbfd_h.jpg" />
+            </header>
+            <h1>UBC Major Planner</h1>
+            <p>Select majors to compare requirements, then mark courses taken/planned.</p>
+
+            <main>
+                <MajorSelector
+                    majors={data}
+                    selected={selectedMajors}
+                    setSelected={setSelectedMajors}
+                />
 
 
-<main>
-<MajorSelector
-majors={data}
-selected={selectedMajors}
-setSelected={setSelectedMajors}
-/>
+                <section className="results">
+                    <ComparisonTable
+                        majors={data}
+                        selectedMajors={selectedMajors}
+                        takenCourses={takenCourses}
+                        setTakenCourses={setTakenCourses}
+                    />
 
 
-<section className="results">
-<ComparisonTable
-majors={data}
-selectedMajors={selectedMajors}
-takenCourses={takenCourses}
-setTakenCourses={setTakenCourses}
-/>
+                    <Planner
+                        majors={data}
+                        selectedMajors={selectedMajors}
+                        takenCourses={takenCourses}
+                        setTakenCourses={setTakenCourses}
+                    />
+                </section>
+            </main>
 
 
-<Planner
-majors={data}
-selectedMajors={selectedMajors}
-takenCourses={takenCourses}
-setTakenCourses={setTakenCourses}
-/>
-</section>
-</main>
-
-
-<footer>
-<small>Sample app — adapt the JSON file in <code>src/data/courses.json</code> to match your real database.</small>
-</footer>
-</div>
-)
+            <footer>
+                <small>Sample app — adapt the JSON file in <code>src/data/courses.json</code> to match your real database.</small>
+            </footer>
+        </div>
+    )
 }
