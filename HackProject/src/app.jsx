@@ -3,6 +3,10 @@ import MajorSelector from './Components/MajorSelector';
 import ComparisonTable from './Components/ComparisonTable';
 import Planner from './Components/Planner';
 
+const printPlanner = () => {
+  window.print();
+};
+
 const UserForm = ({ onSubmit, onCancel }) => {
   const [gpa, setGpa] = useState('');
   const [major, setMajor] = useState('');
@@ -113,6 +117,7 @@ export default function App() {
 
   return (
     <div className="app">
+      {/* Banner from second implementation */}
       <header className="Banner">
         <img className="Banner" src="https://live.staticflickr.com/8027/29016431894_d3a9befbfd_h.jpg" />
       </header>
@@ -120,6 +125,7 @@ export default function App() {
         <h1>UBC Major Planner</h1>
         <p>Select majors to compare requirements, then mark courses taken/planned.</p>
       </div>
+
       {userInfo && (
         <div className="user-display">
           <h3>Your Information</h3>
@@ -130,7 +136,12 @@ export default function App() {
       )}
 
       <main>
-        <button onClick={() => setShowForm(true)}>Enter Your Info</button>
+        <button className="enter-info-btn" onClick={() => setShowForm(true)}>
+          Enter Your Info
+        </button>
+        <button className="download-btn" onClick={printPlanner}>
+          📄 Download Planner PDF
+        </button>
 
         {showForm && (
           <UserForm

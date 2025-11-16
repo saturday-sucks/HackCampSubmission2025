@@ -7,7 +7,7 @@
           "year": "First Year",
           "required_courses": [
             { "credits": 3, "options": [["SCIE 113"]] },
-            { "credits": 3, "options": [["Additional Communication Requirement"]] },
+            { "credits": 3, "options": [["Additional Communications Requirement"]] },
             { "credits": 4, "options": [["CPSC 110"], ["CPSC 103", "CPSC 107"]] },
             { "credits": 4, "options": [["CPSC 121"]] },
             { "credits": 3, "options": [["MATH 100"], ["MATH 102"], ["MATH 104"], ["MATH 180"], ["MATH 184"], ["MATH 120"], ["MATH 110"]] },
@@ -92,7 +92,7 @@
             { "credits": 4, "options": [["CHEM 121"], ["CHEM 111", "CHEM 141"]] },
             { "credits": 4, "options": [["CHEM 123"]] },
             { "credits": 3, "options": [["SCIE 113"]] },
-            { "credits": 3, "options": [["Additional Communication Requirement"]] },
+            { "credits": 3, "options": [["Additional Communications Requirement"]] },
             { "credits": 3, "options": [["MATH 102"], ["MATH 100"], ["MATH 104"]] },
             { "credits": 3, "options": [["PHYS 100-level"]] },
             { "credits": 4, "options": [["Electives"]] }
@@ -133,7 +133,7 @@
           "year": "First Year",
           "required_courses": [
             { "credits": 3, "options": [["SCIE 113"]] },
-            { "credits": 3, "options": [["Additional Communication Requirement"]] },
+            { "credits": 3, "options": [["Additional Communications Requirement"]] },
             { "credits": 4, "options": [["CHEM 121"], ["CHEM 111"]] },
             { "credits": 3, "options": [["MATH 100"], ["MATH 102"], ["MATH 104"], ["MATH 110"], ["MATH 120"], ["MATH 180"], ["MATH 184"]] },
             { "credits": 3, "options": [["MATH 101"], ["MATH 103"], ["MATH 105"], ["MATH 121"]] },

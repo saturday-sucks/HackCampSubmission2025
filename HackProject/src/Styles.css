@@ -127,6 +127,69 @@ footer{margin-top:24px;color:#4b5563}
 .user-display p {
   margin: 4px 0;
 }
+
+.enter-info-btn {
+  background: #1e40af;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px 0;
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+  transition: all 0.3s ease;
+}
+
+.enter-info-btn:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(37, 99, 235, 0.4);
+}
+
+
+.download-btn {
+  background: #1e40af;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px 10px;
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
+}
+
+.download-btn:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+}
+
+
+@media print {
+  /* Hide everything except the planner */
+  body * {
+    visibility: hidden;
+  }
+  .planner, .planner * {
+    visibility: visible;
+  }
+  .planner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Make sure checkboxes show as checked in print */
+  input[type="checkbox"]:checked {
+    background-color: black !important;
+  }
+}
 .Banner img {
     width: 150px;
     height: 100px;
