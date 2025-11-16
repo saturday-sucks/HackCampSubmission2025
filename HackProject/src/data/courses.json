@@ -1,0 +1,42 @@
+[
+    {
+    "major": "Computer Science",
+    "min_average": 85,
+    "years": [
+    {
+    "year": "First Year",
+    "required_courses": [
+    { "course": "CPSC 110", "credits": 4 },
+    { "course": "CPSC 121", "credits": 3 },
+    { "course": "MATH 100", "credits": 3 }
+    ]
+    },
+    {
+    "year": "Second Year",
+    "required_courses": [
+    { "course": "CPSC 210", "credits": 3 },
+    { "course": "MATH 200", "credits": 3 }
+    ]
+    }
+    ]
+    },
+    {
+    "major": "Physics",
+    "min_average": 75,
+    "years": [
+    {
+    "year": "First Year",
+    "required_courses": [
+    { "course": "PHYS 101", "credits": 4 },
+    { "course": "MATH 100", "credits": 3 }
+    ]
+    },
+    {
+    "year": "Second Year",
+    "required_courses": [
+    { "course": "PHYS 201", "credits": 3 }
+    ]
+    }
+    ]
+    }
+    ]
