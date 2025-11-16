@@ -15,28 +15,30 @@ function ExpandableText({ text, completed }) {
   };
 
   return (
-    <span style={textStyle}>
-      {firstPart}
-      {parts.length > 1 && !expanded && (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setExpanded(true);
-          }}
-          style={{
-            border: "none",
-            background: "none",
-            padding: 0,
-            marginLeft: "4px",
-            color: "#007bff",
-            cursor: "pointer",
-            fontSize: "0.9em",
-          }}
-        >
-          ...
-        </button>
-      )}
+    <span>
+      <span style={textStyle}>
+        {firstPart}
+        {parts.length > 1 && !expanded && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setExpanded(true);
+            }}
+            style={{
+              border: "none",
+              background: "none",
+              padding: 0,
+              marginLeft: "4px",
+              color: "#007bff",
+              cursor: "pointer",
+              fontSize: "0.9em",
+            }}
+          >
+            ...
+          </button>
+        )}
+      </span>
 
       {expanded && rest && (
         <span
@@ -46,7 +48,7 @@ function ExpandableText({ text, completed }) {
             marginTop: "3px",
           }}
         >
-          {rest}
+          <span style={textStyle}>{rest}</span>
           <div
             style={{
               marginTop: "4px",
