@@ -1,194 +1,258 @@
 import React from "react";
 
 export default function Planner({
-  majors,
-  selectedMajors,
-  takenCourses,
-  setTakenCourses,
+    majors,
+    selectedMajors,
+    takenCourses,
+    setTakenCourses,
 }) {
-  // Filter selected majors
-  const selectedObjs = majors.filter((m) => selectedMajors.includes(m.major));
-  const lowerYears = ["First Year", "Second Year"];
+    // Major filter dropdown
+    const [majorFilter, setMajorFilter] = React.useState("All");
 
-  // Build lower-year courses
-  const lowerYearRows = lowerYears.map((year) => {
-    const courses = [];
+    // Filter selected major objects
+    const selectedObjs = majors.filter((m) => selectedMajors.includes(m.major));
+    const lowerYears = ["First Year", "Second Year"];
+
+    // ------------------------------
+    // BUILD LOWER-YEAR COURSES
+    // ------------------------------
+    const lowerYearRows = lowerYears.map((year) => {
+        const courses = [];
+
+        selectedObjs.forEach((m) => {
+            const yearObj = m.years.find((yy) => yy.year === year);
+            if (yearObj?.required_courses) {
+                yearObj.required_courses.forEach((c) => {
+                    const courseOptions = c.options || [[c.course]];
+
+                    // Expand multi-options (e.g., ["A","B"])
+                    if (courseOptions.length === 1 && courseOptions[0].length > 1) {
+                        courseOptions[0].forEach((singleCourse) => {
+                            courses.push({
+                                ...c,
+                                major: m.major,
+                                majors: [m.major],
+                                options: [[singleCourse]],
+                                courseDisplay: singleCourse,
+                            });
+                        });
+                    } else {
+                        const display = courseOptions
+                            .map((opt) => opt.join(" + "))
+                            .join(" / ");
+                        courses.push({
+                            ...c,
+                            major: m.major,
+                            majors: [m.major],
+                            options: courseOptions,
+                            courseDisplay: display,
+                        });
+                    }
+                });
+            }
+        });
+
+        // Deduplicate AND merge majors
+        const map = new Map(); // key: courseDisplay
+
+        courses.forEach((c) => {
+            if (!map.has(c.courseDisplay)) {
+                map.set(c.courseDisplay, c);
+            } else {
+                const existing = map.get(c.courseDisplay);
+                if (!existing.majors.includes(c.major)) {
+                    existing.majors.push(c.major);
+                }
+            }
+        });
+
+        const uniqCourses = Array.from(map.values());
+        return { year, courses: uniqCourses };
+    });
+
+    // ------------------------------
+    // BUILD UPPER-YEAR COURSES
+    // ------------------------------
+    const upperYearCourses = [];
 
     selectedObjs.forEach((m) => {
-      const y = m.years.find((yy) => yy.year === year);
-      if (y && y.required_courses) {
-        y.required_courses.forEach((c) => {
-          const courseOptions = c.options || [[c.course]];
+        m.years.forEach((yy) => {
+            if (!lowerYears.includes(yy.year) && yy.required_courses) {
+                yy.required_courses.forEach((c) => {
+                    const courseOptions = c.options || [[c.course]];
 
-          if (courseOptions.length === 1 && courseOptions[0].length > 1) {
-            courseOptions[0].forEach((singleCourse) => {
-              courses.push({
-                ...c,
-                major: m.major,
-                options: [[singleCourse]],
-                courseDisplay: singleCourse,
-              });
-            });
-          } else {
-            const courseDisplay = courseOptions
-              .map((opt) => opt.join(" + "))
-              .join(" / ");
-            courses.push({
-              ...c,
-              major: m.major,
-              options: courseOptions,
-              courseDisplay,
-            });
-          }
+                    if (courseOptions.length === 1 && courseOptions[0].length > 1) {
+                        courseOptions[0].forEach((singleCourse) => {
+                            upperYearCourses.push({
+                                ...c,
+                                major: m.major,
+                                majors: [m.major],
+                                options: [[singleCourse]],
+                                courseDisplay: singleCourse,
+                            });
+                        });
+                    } else {
+                        const display = courseOptions
+                            .map((opt) => opt.join(" + "))
+                            .join(" / ");
+                        upperYearCourses.push({
+                            ...c,
+                            major: m.major,
+                            majors: [m.major],
+                            options: courseOptions,
+                            courseDisplay: display,
+                        });
+                    }
+                });
+            }
         });
-      }
     });
 
-    // Deduplicate
-    const uniq = [];
-    const seen = new Set();
-    courses.forEach((c) => {
-      if (!seen.has(c.courseDisplay)) {
-        seen.add(c.courseDisplay);
-        uniq.push(c);
-      }
+    // Deduplicate & merge majors (upper-year)
+    const mapUpper = new Map();
+    upperYearCourses.forEach((c) => {
+        if (!mapUpper.has(c.courseDisplay)) {
+            mapUpper.set(c.courseDisplay, c);
+        } else {
+            const existing = mapUpper.get(c.courseDisplay);
+            if (!existing.majors.includes(c.major)) {
+                existing.majors.push(c.major);
+            }
+        }
     });
 
-    return { year, courses: uniq };
-  });
+    const upperYearUniq = Array.from(mapUpper.values());
 
-  // Collect all upper-year courses (any year not in lowerYears)
-  const upperYearCourses = [];
-  selectedObjs.forEach((m) => {
-    m.years.forEach((yy) => {
-      if (!lowerYears.includes(yy.year) && yy.required_courses) {
-        yy.required_courses.forEach((c) => {
-          const courseOptions = c.options || [[c.course]];
+    // ------------------------------
+    // RENDER
+    // ------------------------------
+    return (
+        <section className="planner">
+            <h2>Year-by-year planner</h2>
 
-          if (courseOptions.length === 1 && courseOptions[0].length > 1) {
-            courseOptions[0].forEach((singleCourse) => {
-              upperYearCourses.push({
-                ...c,
-                major: m.major,
-                options: [[singleCourse]],
-                courseDisplay: singleCourse,
-              });
-            });
-          } else {
-            const courseDisplay = courseOptions
-              .map((opt) => opt.join(" + "))
-              .join(" / ");
-            upperYearCourses.push({
-              ...c,
-              major: m.major,
-              options: courseOptions,
-              courseDisplay,
-            });
-          }
-        });
-      }
-    });
-  });
-
-  // Deduplicate upper-year courses
-  const upperYearUniq = [];
-  const seenUpper = new Set();
-  upperYearCourses.forEach((c) => {
-    if (!seenUpper.has(c.courseDisplay)) {
-      seenUpper.add(c.courseDisplay);
-      upperYearUniq.push(c);
-    }
-  });
-
-  return (
-    <section className="planner">
-      <h2>Year-by-year planner</h2>
-      {selectedMajors.length === 0 ? (
-        <p>Select at least one major to see planner.</p>
-      ) : (
-        <div>
-          {/* Lower-year courses */}
-          {lowerYearRows.map((yr) => (
-            <div key={yr.year} className="year">
-              <h3>{yr.year}</h3>
-              {yr.courses.length === 0 ? (
-                <p>No required courses for this year.</p>
-              ) : (
-                <ul>
-                  {yr.courses.map((c) => (
-                    <li key={c.courseDisplay}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={takenCourses.includes(c.courseDisplay)}
-                          onChange={() => {
-                            if (takenCourses.includes(c.courseDisplay))
-                              setTakenCourses(
-                                takenCourses.filter(
-                                  (x) => x !== c.courseDisplay
-                                )
-                              );
-                            else
-                              setTakenCourses([
-                                ...takenCourses,
-                                c.courseDisplay,
-                              ]);
-                          }}
-                        />
-                        <strong>{c.courseDisplay}</strong>{" "}
-                        <em>
-                          ({c.credits ?? "?"} cr) — {c.major}
-                        </em>
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <p className="missing">
-                Missing courses this year:{" "}
-                {
-                  yr.courses.filter(
-                    (c) => !takenCourses.includes(c.courseDisplay)
-                  ).length
-                }
-              </p>
-            </div>
-          ))}
-
-          {/* Upper-year courses */}
-          <div className="year">
-            <h3>Upper-Year Courses</h3>
-            {upperYearUniq.length === 0 ? (
-              <p>No upper-year courses.</p>
+            {selectedMajors.length === 0 ? (
+                <p>Select at least one major to see planner.</p>
             ) : (
-              <ul>
-                {upperYearUniq.map((c) => (
-                  <li key={c.courseDisplay}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={takenCourses.includes(c.courseDisplay)}
-                        onChange={() => {
-                          if (takenCourses.includes(c.courseDisplay))
-                            setTakenCourses(
-                              takenCourses.filter((x) => x !== c.courseDisplay)
-                            );
-                          else
-                            setTakenCourses([...takenCourses, c.courseDisplay]);
-                        }}
-                      />
-                      <strong>{c.courseDisplay}</strong>{" "}
-                      <em>
-                        ({c.credits ?? "?"} cr) — {c.major}
-                      </em>
-                    </label>
-                  </li>
-                ))}
-              </ul>
+                <div>
+                    {/* Major Filter Dropdown */}
+                    <div className="major-filter" style={{ marginBottom: "1rem" }}>
+                        <label>Filter by major: </label>
+                        <select
+                            value={majorFilter}
+                            onChange={(e) => setMajorFilter(e.target.value)}
+                        >
+                            <option value="All">All Majors</option>
+                            {selectedObjs.map((m) => (
+                                <option key={m.major} value={m.major}>
+                                    {m.major}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* LOWER-YEAR COURSES */}
+                    {lowerYearRows.map((yr) => (
+                        <div key={yr.year} className="year">
+                            <h3>{yr.year}</h3>
+
+                            {yr.courses.length === 0 ? (
+                                <p>No required courses for this year.</p>
+                            ) : (
+                                <ul>
+                                    {yr.courses
+                                        .filter(
+                                            (c) => majorFilter === "All" || c.majors.includes(majorFilter)
+                                        )
+                                        .map((c) => (
+                                            <li key={c.courseDisplay}>
+                                                <label>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={takenCourses.includes(c.courseDisplay)}
+                                                        onChange={() => {
+                                                            if (takenCourses.includes(c.courseDisplay)) {
+                                                                setTakenCourses(
+                                                                    takenCourses.filter(
+                                                                        (x) => x !== c.courseDisplay
+                                                                    )
+                                                                );
+                                                            } else {
+                                                                setTakenCourses([
+                                                                    ...takenCourses,
+                                                                    c.courseDisplay,
+                                                                ]);
+                                                            }
+                                                        }}
+                                                    />
+                                                    <strong>{c.courseDisplay}</strong>{" "}
+                                                    <em>
+                                                        ({c.credits ?? "?"} cr) — {c.majors.join(", ")}
+                                                    </em>
+                                                </label>
+                                            </li>
+                                        ))}
+                                </ul>
+                            )}
+
+                            <p className="missing">
+                                Missing courses this year:{" "}
+                                {
+                                    yr.courses.filter(
+                                        (c) =>
+                                            (majorFilter === "All" ||
+                                                c.majors.includes(majorFilter)) &&
+                                            !takenCourses.includes(c.courseDisplay)
+                                    ).length
+                                }
+                            </p>
+                        </div>
+                    ))}
+
+                    {/* UPPER-YEAR COURSES */}
+                    <div className="year">
+                        <h3>Upper-Year Courses</h3>
+
+                        {upperYearUniq.length === 0 ? (
+                            <p>No upper-year courses.</p>
+                        ) : (
+                            <ul>
+                                {upperYearUniq
+                                    .filter(
+                                        (c) => majorFilter === "All" || c.majors.includes(majorFilter)
+                                    )
+                                    .map((c) => (
+                                        <li key={c.courseDisplay}>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={takenCourses.includes(c.courseDisplay)}
+                                                    onChange={() => {
+                                                        if (takenCourses.includes(c.courseDisplay)) {
+                                                            setTakenCourses(
+                                                                takenCourses.filter(
+                                                                    (x) => x !== c.courseDisplay
+                                                                )
+                                                            );
+                                                        } else {
+                                                            setTakenCourses([
+                                                                ...takenCourses,
+                                                                c.courseDisplay,
+                                                            ]);
+                                                        }
+                                                    }}
+                                                />
+                                                <strong>{c.courseDisplay}</strong>{" "}
+                                                <em>
+                                                    ({c.credits ?? "?"} cr) — {c.majors.join(", ")}
+                                                </em>
+                                            </label>
+                                        </li>
+                                    ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
             )}
-          </div>
-        </div>
-      )}
-    </section>
-  );
+        </section>
+    );
 }
