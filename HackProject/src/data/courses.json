@@ -1,6 +1,7 @@
 [
   {
     "major": "Computer Science",
+    "min_average": 78.9,
     "years": [
       {
         "year": "First Year",
@@ -63,6 +64,7 @@
   },
   {
     "major": "Data Science",
+    "min_average": 76.0,
     "years": [
       {
         "year": "First Year",
@@ -116,6 +118,7 @@
   },
   {
     "major": "Biotechnology",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -230,6 +233,7 @@
   },
   {
     "major": "Physics",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -301,6 +305,7 @@
   },
   {
     "major": "Astronomy",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -371,6 +376,7 @@
   },
   {
     "major": "Atmospheric Science",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -473,6 +479,7 @@
   },
   {
     "major": "Behavioural Neuroscience",
+    "min_average": 81.0,
     "years": [
       {
         "year": "First Year",
@@ -602,6 +609,7 @@
   },
   {
     "major": "Biochemistry",
+    "min_average": 76.7,
     "years": [
       {
         "year": "First Year",
@@ -671,6 +679,7 @@
   },
   {
     "major": "Biology",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -743,6 +752,7 @@
   },
   {
     "major": "Chemistry",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -809,6 +819,7 @@
   },
   {
     "major": "Environmental Sciences",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -880,6 +891,7 @@
   },
   {
     "major": "Mathematics",
+    "min_average": "NA",
     "years": [
       {
         "year": "First Year",
@@ -940,5 +952,228 @@
       }
     ],
     "total_credits_for_degree": 120
+  },
+  {
+    "major": "Cellular, Anatomical and Physiological Sciences",
+    "min_average": 83.7,
+    "years": [
+      {
+        "year": "First Year",
+        "required_courses": [
+          { "credits": 3, "options": [["SCIE 113"]] },
+          {
+            "credits": 3,
+            "options": [["Additional Communication Requirement"]]
+          },
+          { "credits": 3, "options": [["BIOL 112"]] },
+          { "credits": 3, "options": [["BIOL 121"]] },
+          {
+            "credits": 4,
+            "options": [["CHEM 121"], ["CHEM 141"], ["CHEM 111"]]
+          },
+          { "credits": 4, "options": [["CHEM 123"]] },
+          { "credits": 3, "options": [["MATH 100"]] },
+          { "credits": 3, "options": [["MATH 101"]] },
+          { "credits": 3, "options": [["PHYS 100-level beyond PHYS 100"]] }
+        ],
+        "total_credits": 29
+      },
+      {
+        "year": "Second Year",
+        "required_courses": [
+          { "credits": 3, "options": [["BIOL 200"]] },
+          { "credits": 3, "options": [["BIOL 234"]] },
+          { "credits": 3, "options": [["BIOL 201"], ["BIOC 202"]] },
+          { "credits": 3, "options": [["BIOL 300"], ["STAT 200"]] },
+          { "credits": 3, "options": [["CAPS 205"]] },
+          { "credits": 3, "options": [["CAPS 206"]] },
+          { "credits": 4, "options": [["CHEM 233", "CHEM 235"], ["CHEM 203"]] },
+          { "credits": 3, "options": [["CHEM 205"]] },
+          { "credits": 6, "options": [["Electives"]] }
+        ],
+        "total_credits": 31
+      },
+      {
+        "year": "Upper Year Courses",
+        "required_courses": [
+          { "credits": 3, "options": [["BIOC 302"]] },
+          { "credits": 3, "options": [["CAPS 303"]] },
+          { "credits": 3, "options": [["CAPS 305"]] },
+          { "credits": 3, "options": [["CAPS 306"]] },
+          { "credits": 3, "options": [["CAPS 310"]] },
+          { "credits": 3, "options": [["CAPS 391"]] },
+          {
+            "credits": 9,
+            "options": [
+              ["CAPS 420"],
+              ["CAPS 421"],
+              ["CAPS 422"],
+              ["CAPS 424"],
+              ["CAPS 426"],
+              ["CAPS 427"],
+              ["CAPS 431"],
+              ["CAPS 448"]
+            ]
+          },
+          { "credits": 33, "options": [["Electives"]] }
+        ]
+      }
+    ],
+    "total_credits_for_degree": 120
+  },
+  {
+    "major": "Earth and Ocean Sciences",
+    "min_average": "NA",
+    "years": [
+      {
+        "year": "First Year",
+        "required_courses": [
+          { "credits": 3, "options": [["SCIE 113"]] },
+          {
+            "credits": 4,
+            "options": [["CHEM 121"], ["CHEM 111"], ["CHEM 141"]]
+          },
+          { "credits": 4, "options": [["CHEM 123"]] },
+          { "credits": 6, "options": [["EOSC 100-level"], ["ATSC 100-level"]] },
+          { "credits": 1, "options": [["EOSC 111"]] },
+          {
+            "credits": 3,
+            "options": [["MATH 100"], ["MATH 102"], ["MATH 104"]]
+          },
+          {
+            "credits": 3,
+            "options": [["MATH 101"], ["MATH 103"], ["MATH 105"]]
+          },
+          { "credits": 3, "options": [["PHYS 100-level"]] },
+          { "credits": 3, "options": [["Electives"]] }
+        ],
+        "total_credits": 30
+      },
+      {
+        "year": "Second Year",
+        "required_courses": [
+          {
+            "credits": 3,
+            "options": [["Additional Communication Requirement"]]
+          },
+          {
+            "credits": 3,
+            "options": [["EOSC 211"], ["GEOS 270"], ["GEOB 270"]]
+          },
+          { "credits": 3, "options": [["EOSC 212"]] },
+          {
+            "credits": 6,
+            "options": [
+              ["EOSC 200-level or above"],
+              ["ENVR 200-level or above"],
+              ["ATSC 200-level or above"]
+            ]
+          },
+          { "credits": 15, "options": [["Electives"]] }
+        ],
+        "total_credits": 30
+      },
+      {
+        "year": "Upper Year Courses",
+        "required_courses": [
+          {
+            "credits": 24,
+            "options": [
+              ["EOSC 300-level or above"],
+              ["ENVR 300-level or above"],
+              ["ATSC 300-level or above"]
+            ]
+          },
+          {
+            "credits": 6,
+            "options": [
+              ["EOSC 400-level"],
+              ["ENVR 400-level"],
+              ["ATSC 400-level"]
+            ]
+          },
+          { "credits": 30, "options": [["Electives"]] }
+        ]
+      }
+    ],
+    "total_credits_for_degree": 120
+  },
+  {
+    "major": "Biochemistry and Forensic Science",
+    "min_average": 76.7,
+    "years": [
+      {
+        "year": "First Year",
+        "required_courses": [
+          { "credits": 3, "options": [["SCIE 113"]] },
+          {
+            "credits": 3,
+            "options": [["Additional Communication Requirement"]]
+          },
+          { "credits": 3, "options": [["BIOL 112"]] },
+          {
+            "credits": 4,
+            "options": [["CHEM 121"], ["CHEM 111"], ["CHEM 141"]]
+          },
+          { "credits": 4, "options": [["CHEM 123"]] },
+          {
+            "credits": 3,
+            "options": [["MATH 100"], ["MATH 102"], ["MATH 104"]]
+          },
+          { "credits": 3, "options": [["DSCI 100"], ["CPSC 103"]] },
+          { "credits": 3, "options": [["PHYS 100-level"]] },
+          { "credits": 8, "options": [["Electives"]] }
+        ],
+        "total_credits": 34
+      },
+      {
+        "year": "Second Year",
+        "required_courses": [
+          {
+            "credits": 24,
+            "options": [
+              ["BIOC 203"],
+              ["BIOL 200"],
+              ["BIOL 234"],
+              ["CHEM 203"],
+              ["CHEM 213", "CHEM 245"],
+              ["CHEM 211"],
+              ["STAT 201"],
+              ["CPSC 203"]
+            ]
+          },
+          { "credits": 9, "options": [["FSCT 280", "FSCT 290"]] }
+        ],
+        "total_credits": 33
+      },
+      {
+        "year": "Upper Year Courses",
+        "required_courses": [
+          {
+            "credits": 15,
+            "options": [["BIOC 303"], ["BIOC 301"], ["BIOL 335"], ["Electives"]]
+          },
+          { "credits": 18, "options": [["FSCT 380", "FSCT 390"]] },
+          {
+            "credits": 21,
+            "options": [
+              ["BIOC 402", "BIOC 410"],
+              ["BIOC 403"],
+              ["BIOC 421"],
+              ["BIOC 430"],
+              ["BIOC 440"],
+              ["BIOC 450"],
+              ["BIOC 460"],
+              ["BIOC 470"],
+              ["BIOC research option"],
+              ["FSCT Upper Year Elective"],
+              ["Electives"]
+            ]
+          },
+          { "credits": 11, "options": [["FSCT 480", "FSCT 490"]] }
+        ]
+      }
+    ],
+    "total_credits_for_degree": 132
   }
 ]
