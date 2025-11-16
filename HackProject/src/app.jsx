@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import MajorSelector from './Components/MajorSelector'
-import ComparisonTable from './Components/ComparisonTable'
-import Planner from './Components/Planner'
+import React, { useEffect, useState } from 'react';
+import MajorSelector from './Components/MajorSelector';
+import ComparisonTable from './Components/ComparisonTable';
+import Planner from './Components/Planner';
+
+const printPlanner = () => {
+  window.print();
+};
 
 const UserForm = ({ onSubmit, onCancel }) => {
   const [gpa, setGpa] = useState('');
@@ -9,14 +13,8 @@ const UserForm = ({ onSubmit, onCancel }) => {
   const [year, setYear] = useState('');
   const [courses, setCourses] = useState(['']);
 
-  const addCourse = () => {
-    setCourses([...courses, '']);
-  };
-
-  const removeCourse = (index) => {
-    setCourses(courses.filter((_, i) => i !== index));
-  };
-
+  const addCourse = () => setCourses([...courses, '']);
+  const removeCourse = (index) => setCourses(courses.filter((_, i) => i !== index));
   const updateCourse = (index, value) => {
     const newCourses = [...courses];
     newCourses[index] = value;
@@ -25,16 +23,12 @@ const UserForm = ({ onSubmit, onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Filter out empty courses
     const filteredCourses = courses.filter(c => c.trim() !== '');
-    
-    // Pass the data back to App component
     onSubmit({
       gpa,
       major,
       year,
-      takenCourses: filteredCourses
+      takenCourses: filteredCourses,
     });
   };
 
@@ -45,9 +39,11 @@ const UserForm = ({ onSubmit, onCancel }) => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>GPA:</label>
-            <input 
-              type="number" 
+            <input
+              type="number"
               step="0.1"
+              min="0"
+              max="4.33"
               value={gpa}
               onChange={(e) => setGpa(e.target.value)}
               placeholder="Enter your GPA"
@@ -56,8 +52,8 @@ const UserForm = ({ onSubmit, onCancel }) => {
 
           <div className="form-group">
             <label>Major:</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={major}
               onChange={(e) => setMajor(e.target.value)}
               placeholder="Enter your major"
@@ -66,12 +62,13 @@ const UserForm = ({ onSubmit, onCancel }) => {
 
           <div className="form-group">
             <label>Year:</label>
-            <input 
-              type="text" 
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              placeholder="Enter your year"
-            />
+            <select value={year} onChange={(e) => setYear(e.target.value)}>
+              <option value="">Select your year</option>
+              <option value="1">First Year</option>
+              <option value="2">Second Year</option>
+              <option value="3">Third Year</option>
+              <option value="4">Fourth Year</option>
+            </select>
           </div>
 
           <div className="form-group">
@@ -85,15 +82,11 @@ const UserForm = ({ onSubmit, onCancel }) => {
                   placeholder="Course code (e.g., CPSC 110)"
                 />
                 {courses.length > 1 && (
-                  <button type="button" onClick={() => removeCourse(index)}>
-                    Remove
-                  </button>
+                  <button type="button" onClick={() => removeCourse(index)}>Remove</button>
                 )}
               </div>
             ))}
-            <button type="button" onClick={addCourse}>
-              Add Another Course
-            </button>
+            <button type="button" onClick={addCourse}>Add Another Course</button>
           </div>
 
           <div className="form-buttons">
@@ -107,80 +100,92 @@ const UserForm = ({ onSubmit, onCancel }) => {
 };
 
 export default function App() {
-const [data, setData] = useState(null)
-const [selectedMajors, setSelectedMajors] = useState([])
-const [takenCourses, setTakenCourses] = useState([])
+  const [data, setData] = useState(null);
+  const [selectedMajors, setSelectedMajors] = useState([]);
+  const [takenCourses, setTakenCourses] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
-// For showing/hiding the user form
-const [showForm, setShowForm] = useState(false);
+  useEffect(() => {
+    fetch('/src/data/courses.json')
+      .then(r => r.json())
+      .then(setData)
+      .catch(err => console.error('Failed to load courses.json', err));
+  }, []);
 
+  if (!data) return <div className="app">Loading data...</div>;
 
-useEffect(() => {
-fetch('/src/data/courses.json')
-.then(r => r.json())
-.then(setData)
-.catch(err => console.error('Failed to load courses.json', err))
-}, [])
+  return (
+    <div className="app">
+      {/* Banner from second implementation */}
+      <header className="Banner">
+        <img className="Banner" src="https://live.staticflickr.com/8027/29016431894_d3a9befbfd_h.jpg" />
+      </header>
+      <div className="header-text">
+        <h1>UBC Major Planner</h1>
+        <p>Select majors to compare requirements, then mark courses taken/planned.</p>
+      </div>
 
+      {userInfo && (
+        <div className="user-display">
+          <h3>Your Information</h3>
+          <p><strong>Major:</strong> {userInfo.major}</p>
+          <p><strong>Year:</strong> {userInfo.year}</p>
+          <p><strong>GPA:</strong> {userInfo.gpa}</p>
+        </div>
+      )}
 
-if (!data) return <div className="app">Loading data...</div>
+      <main>
+        <button className="enter-info-btn" onClick={() => setShowForm(true)}>
+          Enter Your Info
+        </button>
+        <button className="download-btn" onClick={printPlanner}>
+          📄 Download Planner PDF
+        </button>
 
+        {showForm && (
+          <UserForm
+            onSubmit={(userData) => {
+              setTakenCourses(userData.takenCourses || []);
+              setUserInfo({
+                gpa: userData.gpa,
+                major: userData.major,
+                year: userData.year,
+              });
+              setShowForm(false);
+            }}
+            onCancel={() => setShowForm(false)}
+          />
+        )}
 
-return (
-<div className="app">
-<header>
-<h1>UBC Major Planner</h1>
-<p>Select majors to compare requirements, then mark courses taken/planned.</p>
-</header>
+        <MajorSelector
+          majors={data}
+          selected={selectedMajors}
+          setSelected={setSelectedMajors}
+        />
 
+        <section className="results">
+          <ComparisonTable
+            majors={data}
+            selectedMajors={selectedMajors}
+            takenCourses={takenCourses}
+            setTakenCourses={setTakenCourses}
+          />
 
-<main>
+          <Planner
+            majors={data}
+            selectedMajors={selectedMajors}
+            takenCourses={takenCourses}
+            setTakenCourses={setTakenCourses}
+          />
+        </section>
+      </main>
 
-{/* Button to open user form */}
-<button onClick={() => setShowForm(true)}>Enter Your Info</button>
-
-{/* Show form only when needed */}
-{showForm && (
-  <UserForm
-    onSubmit={(userData) => {
-      // update courses from form
-      setTakenCourses(userData.takenCourses || []);
-      // hide the form after submit
-      setShowForm(false);
-    }}
-    onCancel={() => setShowForm(false)}
-  />
-)}
-
-<MajorSelector
-majors={data}
-selected={selectedMajors}
-setSelected={setSelectedMajors}
-/>
-
-
-<section className="results">
-<ComparisonTable
-majors={data}
-selectedMajors={selectedMajors}
-takenCourses={takenCourses}
-setTakenCourses={setTakenCourses}
-/>
-
-
-<Planner
-majors={data}
-selectedMajors={selectedMajors}
-takenCourses={takenCourses}
-setTakenCourses={setTakenCourses}
-/>
-</section>
-</main>
-
-
-<footer>
-<small>Sample app — adapt the JSON file in <code>src/data/courses.json</code> to match your real database.</small>
-</footer>
-</div>
-)
+      <footer>
+        <small>
+          Sample app — adapt the JSON file in <code>src/data/courses.json</code> to match your real database.
+        </small>
+      </footer>
+    </div>
+  );
 }
